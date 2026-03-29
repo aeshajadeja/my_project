@@ -105,6 +105,13 @@ class SubjectAllocationActivity : AppCompatActivity() {
         val updatedIds = allAllocIds.toMutableSet()
         updatedIds.add(allocId)
         editor.putStringSet("allocation_ids", updatedIds)
+
+        // Store subjects specifically for this faculty for quick lookup
+        val facultySubjects = sharedPref.getStringSet("subjects_${faculty.id}", mutableSetOf()) ?: mutableSetOf()
+        val updatedSubSets = facultySubjects.toMutableSet()
+        updatedSubSets.add(subject)
+        editor.putStringSet("subjects_${faculty.id}", updatedSubSets)
+
         editor.apply()
 
         Toast.makeText(this, "Subject Allocated Successfully", Toast.LENGTH_SHORT).show()
@@ -145,6 +152,11 @@ class SubjectAllocationActivity : AppCompatActivity() {
                 ids?.remove(alloc.id)
                 editor.putStringSet("allocation_ids", ids)
                 
+                // Also update the subjects set for the faculty
+                val facultySubjects = sharedPref.getStringSet("subjects_${alloc.facultyId}", mutableSetOf())?.toMutableSet()
+                facultySubjects?.remove(alloc.subject)
+                editor.putStringSet("subjects_${alloc.facultyId}", facultySubjects)
+
                 editor.remove("fac_id_${alloc.id}")
                 editor.remove("fac_name_${alloc.id}")
                 editor.remove("subject_${alloc.id}")

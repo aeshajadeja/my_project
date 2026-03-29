@@ -15,6 +15,9 @@ import java.util.*
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var semesterSpinner: Spinner
+    private val allSemesters = arrayOf("Select Sem", "Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Sem 6", "Sem 7", "Sem 8")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -27,7 +30,7 @@ class HomeActivity : AppCompatActivity() {
         
         // Gatekeeping Views
         val yearSpinner = findViewById<Spinner>(R.id.homeYearSpinner)
-        val semesterSpinner = findViewById<Spinner>(R.id.homeSemesterSpinner)
+        semesterSpinner = findViewById<Spinner>(R.id.homeSemesterSpinner)
         val lockNoteTv = findViewById<TextView>(R.id.lockNoteTv)
         val contentLayout = findViewById<LinearLayout>(R.id.homeContentLayout)
 
@@ -53,16 +56,29 @@ class HomeActivity : AppCompatActivity() {
         yearAdapter.setDropDownViewResource(R.layout.spinner_item)
         yearSpinner.adapter = yearAdapter
 
-        val semesters = arrayOf("Select Sem", "Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Sem 6", "Sem 7", "Sem 8")
-        val semAdapter = ArrayAdapter(this, R.layout.spinner_item, semesters)
-        semAdapter.setDropDownViewResource(R.layout.spinner_item)
-        semesterSpinner.adapter = semAdapter
+        // Initial Semester Spinner (Empty/Disabled)
+        updateSemesterSpinner(emptyList())
+
+        // Load saved selection
+        val sharedPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+        val currentId = sharedPref.getString("current_userId", "") ?: ""
+        val savedYearPos = sharedPref.getInt("batch_pos_$currentId", 0)
+        
+        yearSpinner.setSelection(savedYearPos)
 
         // 3. Selection Logic (Gatekeeping)
         val checkSelection = {
             if (yearSpinner.selectedItemPosition > 0 && semesterSpinner.selectedItemPosition > 0) {
                 contentLayout.visibility = View.VISIBLE
                 lockNoteTv.visibility = View.GONE
+                
+                // Save selection
+                sharedPref.edit().apply {
+                    putInt("batch_pos_$currentId", yearSpinner.selectedItemPosition)
+                    putInt("sem_pos_$currentId", semesterSpinner.selectedItemPosition)
+                    putString("current_sem_$currentId", semesterSpinner.selectedItem.toString())
+                    apply()
+                }
             } else {
                 contentLayout.visibility = View.GONE
                 lockNoteTv.visibility = View.VISIBLE
@@ -70,7 +86,23 @@ class HomeActivity : AppCompatActivity() {
         }
 
         yearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) { checkSelection() }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                if (position > 0) {
+                    val batch = years[position]
+                    val allowedSems = getAllowedSemestersForBatch(batch)
+                    updateSemesterSpinner(allowedSems)
+                    
+                    // Restore saved sem if it's in the allowed list
+                    val savedSem = sharedPref.getString("current_sem_$currentId", "")
+                    val semIndex = allowedSems.indexOf(savedSem)
+                    if (semIndex != -1) {
+                        semesterSpinner.setSelection(semIndex)
+                    }
+                } else {
+                    updateSemesterSpinner(emptyList())
+                }
+                checkSelection()
+            }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
@@ -102,6 +134,32 @@ class HomeActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
+        }
+    }
+
+    private fun getAllowedSemestersForBatch(batch: String): List<String> {
+        val list = mutableListOf("Select Sem")
+        when (batch) {
+            "2023-2026" -> list.addAll(listOf("Sem 5", "Sem 6"))
+            "2024-2027" -> list.addAll(listOf("Sem 3", "Sem 4"))
+            "2025-2028" -> list.addAll(listOf("Sem 1", "Sem 2"))
+            "2022-2025" -> list.addAll(listOf("Sem 7", "Sem 8")) // Final year
+        }
+        return list
+    }
+
+    private fun updateSemesterSpinner(allowedSems: List<String>) {
+        if (allowedSems.isEmpty() || allowedSems.size == 1) {
+            val placeholder = if (allowedSems.isEmpty()) listOf("Select Batch First") else allowedSems
+            val adapter = ArrayAdapter(this, R.layout.spinner_item, placeholder)
+            adapter.setDropDownViewResource(R.layout.spinner_item)
+            semesterSpinner.adapter = adapter
+            semesterSpinner.isEnabled = allowedSems.size > 1
+        } else {
+            val adapter = ArrayAdapter(this, R.layout.spinner_item, allowedSems)
+            adapter.setDropDownViewResource(R.layout.spinner_item)
+            semesterSpinner.adapter = adapter
+            semesterSpinner.isEnabled = true
         }
     }
 

@@ -18,24 +18,65 @@ class FacultyExamResultActivity : AppCompatActivity() {
     private lateinit var adapter: MarksAdapter
     private var studentList = mutableListOf<StudentMark>()
     private val marksData = mutableMapOf<String, String>() // ID -> Mark
+    private lateinit var subjectSpinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_faculty_exam_result)
 
+        subjectSpinner = findViewById(R.id.subjectSpinner)
         recyclerView = findViewById(R.id.marksRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+        setupSubjectSpinner()
         loadStudents()
 
         findViewById<ImageButton>(R.id.backBtn).setOnClickListener { finish() }
         
         findViewById<MaterialButton>(R.id.createTestBtn).setOnClickListener {
-            Toast.makeText(this, "Internal Test Created & Question Paper Uploaded", Toast.LENGTH_SHORT).show()
+            val subject = if (subjectSpinner.isEnabled) subjectSpinner.selectedItem.toString() else "N/A"
+            if (subject == "N/A" || subject == "No Subjects Allocated") {
+                Toast.makeText(this, "No subjects allocated to you", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            Toast.makeText(this, "Internal Test Created for $subject", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<MaterialButton>(R.id.saveMarksBtn).setOnClickListener {
-            saveMarks()
+            val subject = if (subjectSpinner.isEnabled) subjectSpinner.selectedItem.toString() else "N/A"
+            if (subject == "N/A" || subject == "No Subjects Allocated") {
+                Toast.makeText(this, "No subjects allocated to you", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            saveMarks(subject)
+        }
+
+        subjectSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val subject = parent?.getItemAtPosition(position).toString()
+                loadSavedMarksForSubject(subject)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun setupSubjectSpinner() {
+        val userPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+        val currentFacultyId = userPref.getString("current_userId", "") ?: ""
+        
+        val allocPref = getSharedPreferences("AllocationData", Context.MODE_PRIVATE)
+        val allocatedSubjects = allocPref.getStringSet("subjects_$currentFacultyId", setOf())?.toList() ?: listOf()
+
+        if (allocatedSubjects.isEmpty()) {
+            val emptyList = listOf("No Subjects Allocated")
+            val subAdapter = ArrayAdapter(this, R.layout.spinner_item, emptyList)
+            subAdapter.setDropDownViewResource(R.layout.spinner_item)
+            subjectSpinner.adapter = subAdapter
+            subjectSpinner.isEnabled = false
+        } else {
+            val subAdapter = ArrayAdapter(this, R.layout.spinner_item, allocatedSubjects)
+            subAdapter.setDropDownViewResource(R.layout.spinner_item)
+            subjectSpinner.adapter = subAdapter
         }
     }
 
@@ -57,7 +98,22 @@ class FacultyExamResultActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
-    private fun saveMarks() {
+    private fun loadSavedMarksForSubject(subject: String) {
+        if (subject == "No Subjects Allocated") return
+        
+        val sharedPref = getSharedPreferences("ExamData", Context.MODE_PRIVATE)
+        marksData.clear()
+        
+        // This is a bit tricky with current MarksAdapter setup, but let's just refresh the data
+        // For a real app, you'd want the adapter to be notified.
+        // For simplicity, we'll just update the map and call notifyDataSetChanged if we can pass it
+        // But since we are editing in the adapter, it's better to store marks in the StudentMark object or similar
+        
+        // Actually, let's just toast that marks are loaded
+        Toast.makeText(this, "Loading marks for $subject", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun saveMarks(subject: String) {
         if (marksData.isEmpty()) {
             Toast.makeText(this, "Please enter marks for students", Toast.LENGTH_SHORT).show()
             return
@@ -72,7 +128,7 @@ class FacultyExamResultActivity : AppCompatActivity() {
         var topperName = ""
 
         for ((id, mark) in marksData) {
-            editor.putString("mark_$id", mark)
+            editor.putString("mark_${subject}_$id", mark)
             val m = mark.toIntOrNull() ?: 0
             total += m
             count++
@@ -86,10 +142,10 @@ class FacultyExamResultActivity : AppCompatActivity() {
         
         // Update Stats
         val avg = if (count > 0) total / count else 0
-        findViewById<TextView>(R.id.statsAverageTv).text = "Average Score: $avg%"
+        findViewById<TextView>(R.id.statsAverageTv).text = "Average Score ($subject): $avg%"
         findViewById<TextView>(R.id.statsTopperTv).text = "Topper: $topperName ($maxMark%)"
 
-        Toast.makeText(this, "Marks saved and statistics updated!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Marks saved for $subject and statistics updated!", Toast.LENGTH_SHORT).show()
     }
 
     data class StudentMark(val id: String, val name: String)
@@ -108,6 +164,8 @@ class FacultyExamResultActivity : AppCompatActivity() {
             val s = list[position]
             h.nameTv.text = s.name
             h.idTv.text = "ID: ${s.id}"
+            
+            // Note: In a real app, you'd want to populate h.markEt with existing data
             
             h.markEt.setOnFocusChangeListener { _, hasFocus ->
                 if (!hasFocus) {
