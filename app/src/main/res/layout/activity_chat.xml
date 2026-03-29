@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bgColor">
+
+    <!-- Header with Back Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_revert"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/primaryDarkColor"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Teacher Chat"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/primaryDarkColor"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Message 1 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dr. Smith: Hello everyone, please submit your assignments by Friday."
+                android:background="@drawable/edit_text_rounded"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="40dp"/>
+
+            <!-- Message 2 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You: Sir, can we get an extension?"
+                android:background="@drawable/edit_text_rounded"
+                android:backgroundTint="@color/primaryLightColor"
+                android:textColor="@color/white"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="40dp"/>
+            
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_marginTop="8dp">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Type a message..."
+            style="@style/InputStyle"
+            android:layout_marginBottom="0dp"/>
+        <ImageButton
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@android:drawable/ic_menu_send"
+            android:backgroundTint="@color/primaryColor"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Send"/>
+    </LinearLayout>
+</LinearLayout>

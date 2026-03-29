@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Solid Professional Campus Theme -->
+    <color name="primaryColor">#102C57</color> <!-- Solid Deep Navy -->
+    <color name="primaryLightColor">#1679AB</color>
+    <color name="primaryDarkColor">#071931</color>
+
+    <color name="secondaryColor">#15B392</color> <!-- Solid Emerald -->
+    <color name="secondaryLightColor">#73EC8B</color>
+    <color name="secondaryDarkColor">#0B666A</color>
+
+    <!-- Backgrounds -->
+    <color name="bgColor">#FFFFFF</color> 
+    <color name="backgroundColor">#FFFFFF</color> 
+    <color name="surfaceColor">#FFFFFF</color>
+    <color name="cardColor">#FFFFFF</color>
+
+    <!-- GUARANTEED VISIBILITY: Solid Black Text -->
+    <color name="textColorPrimary">#000000</color> 
+    <color name="textDark">#000000</color>
+    <color name="textColorSecondary">#222222</color> 
+    <color name="textMuted">#444444</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="dividerColor">#CCCCCC</color>
+
+    <!-- Semantic Colors -->
+    <color name="success">#1B5E20</color>
+    <color name="warning">#E65100</color>
+    <color name="error">#B71C1C</color>
+
+    <!-- Module Accents -->
+    <color name="accentBlue">#0D47A1</color>
+    <color name="accentPurple">#4A148C</color>
+    <color name="accentPink">#880E4F</color>
+    <color name="accentTeal">#004D40</color>
+</resources>

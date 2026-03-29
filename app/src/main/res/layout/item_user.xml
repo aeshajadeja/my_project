@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardCornerRadius="25dp"
+            app:cardBackgroundColor="@color/bgColor">
+            <ImageView
+                android:id="@+id/userIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:padding="12dp"
+                app:tint="@color/primaryColor"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
+
+            <TextView
+                android:id="@+id/userNameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Name"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/textColorPrimary"/>
+
+            <TextView
+                android:id="@+id/userIdTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID: 1234567890"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/editUserBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_menu_edit"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/primaryColor"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Edit User" />
+
+        <ImageButton
+            android:id="@+id/deleteUserBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/error"
+            android:contentDescription="Delete User" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

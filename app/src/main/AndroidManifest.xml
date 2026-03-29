@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.my_project">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_foreground"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="Campus Companion"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyProject">
+
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".RegistrationActivity" android:exported="false" />
+        <activity android:name=".LoginActivity" android:exported="false" />
+        <activity android:name=".HomeActivity" android:exported="false" />
+        <activity android:name=".AttendanceActivity" android:exported="false" />
+        <activity android:name=".ChatActivity" android:exported="false" />
+        <activity android:name=".NotificationsActivity" android:exported="false" />
+        <activity android:name=".TimetableActivity" android:exported="false" />
+        <activity android:name=".ProfileActivity" android:exported="false" />
+        <activity android:name=".SyllabusActivity" android:exported="false" />
+        <activity android:name=".AssignmentActivity" android:exported="false" />
+        <activity android:name=".ExamActivity" android:exported="false" />
+        <activity android:name=".ResultActivity" android:exported="false" />
+        <activity android:name=".AdminActivity" android:exported="false" />
+        <activity android:name=".FacultyActivity" android:exported="false" />
+        <activity android:name=".QuizActivity" android:exported="false" />
+        <activity android:name=".UserListActivity" android:exported="false" />
+        <activity android:name=".NoticeManagementActivity" android:exported="false" />
+        <activity android:name=".MarkAttendanceActivity" android:exported="false" />
+        <activity android:name=".FacultyTimetableActivity" android:exported="false" />
+        <activity android:name=".FacultyAssignmentActivity" android:exported="false" />
+        <activity android:name=".FacultyExamResultActivity" android:exported="false" />
+        <activity android:name=".CourseManagementActivity" android:exported="false" />
+        <activity android:name=".SubjectAllocationActivity" android:exported="false" />
+
+    </application>
+
+</manifest>

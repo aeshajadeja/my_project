@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bgColor">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="@color/primaryColor">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Faculty Dashboard"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/facultyWelcomeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome, Professor"
+                android:textColor="#CCFFFFFF"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/facultyProfileCard"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            app:cardCornerRadius="22.5dp"
+            app:cardElevation="2dp"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:id="@+id/facultyProfileIconView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:scaleType="centerCrop"
+                app:tint="@color/primaryColor"
+                android:padding="8dp"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageButton
+            android:id="@+id/logoutBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_lock_power_off"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/white"
+            android:contentDescription="Logout"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:alignmentMode="alignMargins"
+                android:columnOrderPreserved="false">
+
+                <!-- Mark Attendance -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/facultyAttendanceCard"
+                    style="@style/CampusCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_agenda" app:tint="@color/primaryColor"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Attendance" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Assignments -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/facultyAssignmentsCard"
+                    style="@style/CampusCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/primaryDarkColor"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Assignments" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Results & Exams -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/facultyExamResultCard"
+                    style="@style/CampusCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/btn_star_big_on" app:tint="@color/secondaryColor"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Exams &amp; Results" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Schedule -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/facultyScheduleCard"
+                    style="@style/CampusCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_today" app:tint="@color/primaryLightColor"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="My Schedule" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Syllabus (New) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/facultySyllabusCard"
+                    style="@style/CampusCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_save" app:tint="@color/accentPurple"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Syllabus" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Announcements (New) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/facultyNoticeCard"
+                    style="@style/CampusCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_dialog_info" app:tint="@color/accentBlue"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Announcements" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Messages -->
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/CampusCardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/stat_notify_chat" app:tint="@color/success"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Messages" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

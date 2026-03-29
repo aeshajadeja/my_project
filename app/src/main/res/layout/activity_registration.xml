@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp">
+
+        <!-- Logo -->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_campus_logo"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="Campus Logo"/>
+
+        <!-- Title -->
+
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="Join Campus Companion"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your details to register"
+            android:textSize="14sp"
+            android:textColor="@color/textColorSecondary"
+            android:gravity="center"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- Full Name -->
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Full Name"
+            android:drawableStart="@android:drawable/ic_menu_myplaces"
+            android:drawablePadding="12dp"
+            style="@style/InputStyle"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- User ID -->
+        <EditText
+            android:id="@+id/userIdEditText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Enrollment No / User ID"
+            android:inputType="text"
+            android:drawableStart="@android:drawable/ic_dialog_email"
+            android:drawablePadding="12dp"
+            style="@style/InputStyle"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Password -->
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:drawablePadding="12dp"
+            style="@style/InputStyle"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Register Button -->
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Create Account"
+            style="@style/ButtonStyle"/>
+
+        <!-- Login Redirect -->
+        <TextView
+            android:id="@+id/loginTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already part of the campus? Login"
+            android:textColor="@color/primaryColor"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

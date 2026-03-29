@@ -1,0 +1,19 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Blue Graduation Cap Icon -->
+    <path
+        android:fillColor="#102C57"
+        android:pathData="M12,38 L54,18 L96,38 L54,58 Z" />
+    <path
+        android:fillColor="#102C57"
+        android:pathData="M30,47 L30,68 C30,68 42,78 54,78 C66,78 78,68 78,68 L78,47 L54,58 Z" />
+    <path
+        android:fillColor="#15B392"
+        android:pathData="M85,40 L85,75 L82,75 L82,40 Z" />
+    <path
+        android:fillColor="#15B392"
+        android:pathData="M80,75 L87,75 L87,82 L80,82 Z" />
+</vector>

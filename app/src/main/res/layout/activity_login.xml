@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgColor"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="60dp"
+        android:paddingBottom="40dp">
+
+        <!-- App Logo -->
+        <ImageView
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:src="@drawable/ic_campus_logo"
+            android:layout_marginBottom="28dp"
+            android:contentDescription="Campus Logo"/>
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome Back"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/primaryDarkColor"
+            android:layout_marginBottom="6dp"/>
+
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login to your campus companion"
+            android:textSize="14sp"
+            android:textColor="@color/textColorSecondary"
+            android:layout_marginBottom="36dp"/>
+
+        <!-- User ID -->
+        <EditText
+            android:id="@+id/userIdEditText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Enrollment No / User ID"
+            android:inputType="text"
+            android:drawableStart="@android:drawable/ic_dialog_email"
+            android:drawablePadding="12dp"
+            style="@style/InputStyle"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Password -->
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:drawableStart="@android:drawable/ic_lock_idle_lock"
+            android:drawablePadding="12dp"
+            style="@style/InputStyle"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Forgot Password -->
+        <TextView
+            android:id="@+id/forgotPasswordTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:textColor="@color/secondaryDarkColor"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:layout_marginBottom="28dp"
+            android:padding="6dp"/>
+
+        <!-- Login Button -->
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Sign In"
+            style="@style/ButtonStyle"/>
+
+        <!-- Register -->
+        <TextView
+            android:id="@+id/registerTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New here? Create an Account"
+            android:textColor="@color/primaryColor"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+
+</ScrollView>
