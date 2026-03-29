@@ -58,8 +58,9 @@ class AssignmentActivity : AppCompatActivity() {
         for (id in assignIds) {
             val title = sharedPref.getString("title_$id", "") ?: ""
             val deadline = sharedPref.getString("deadline_$id", "") ?: ""
+            val subject = sharedPref.getString("subject_$id", "General") ?: "General"
             if (title.isNotEmpty()) {
-                assignmentList.add(Assignment(id, title, deadline))
+                assignmentList.add(Assignment(id, title, deadline, subject))
             }
         }
         
@@ -106,7 +107,7 @@ class AssignmentActivity : AppCompatActivity() {
         adapter.notifyItemChanged(pendingPosition)
     }
 
-    data class Assignment(val id: String, val title: String, val deadline: String)
+    data class Assignment(val id: String, val title: String, val deadline: String, val subject: String)
 
     class StudentAssignmentAdapter(
         private val list: List<Assignment>, 
@@ -127,7 +128,7 @@ class AssignmentActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(h: ViewHolder, position: Int) {
             val a = list[position]
-            h.titleTv.text = a.title
+            h.titleTv.text = "[${a.subject}] ${a.title}"
             h.deadTv.text = "Deadline: ${a.deadline}"
             
             val subPref = h.itemView.context.getSharedPreferences("SubmissionData", Context.MODE_PRIVATE)

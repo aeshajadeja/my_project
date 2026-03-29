@@ -52,12 +52,20 @@ class FacultyAssignmentActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("AssignmentData", Context.MODE_PRIVATE)
         val assignIds = sharedPref.getStringSet("assign_ids", mutableSetOf()) ?: mutableSetOf()
         
+        val userPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+        val currentFacultyId = userPref.getString("current_userId", "") ?: ""
+
         assignmentList.clear()
         for (id in assignIds) {
-            val title = sharedPref.getString("title_$id", "") ?: ""
-            val deadline = sharedPref.getString("deadline_$id", "") ?: ""
-            val docUri = sharedPref.getString("doc_$id", null)
-            assignmentList.add(Assignment(id, title, deadline, docUri))
+            val facultyId = sharedPref.getString("facultyId_$id", "")
+            // Only show assignments created by this faculty
+            if (facultyId == currentFacultyId) {
+                val title = sharedPref.getString("title_$id", "") ?: ""
+                val deadline = sharedPref.getString("deadline_$id", "") ?: ""
+                val docUri = sharedPref.getString("doc_$id", null)
+                val subject = sharedPref.getString("subject_$id", "General") ?: "General"
+                assignmentList.add(Assignment(id, title, deadline, docUri, subject))
+            }
         }
         
         adapter = AssignmentAdapter(assignmentList, 
@@ -69,20 +77,37 @@ class FacultyAssignmentActivity : AppCompatActivity() {
     }
 
     private fun showAddAssignmentDialog() {
+        val userPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+        val currentFacultyId = userPref.getString("current_userId", "") ?: ""
+        
+        val allocPref = getSharedPreferences("AllocationData", Context.MODE_PRIVATE)
+        val allocatedSubjects = allocPref.getStringSet("subjects_$currentFacultyId", setOf())?.toList() ?: listOf()
+
+        if (allocatedSubjects.isEmpty()) {
+            Toast.makeText(this, "No subjects allocated to you. Contact Admin.", Toast.LENGTH_LONG).show()
+            return
+        }
+
         selectedDocUri = null // Reset for new upload
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Upload New Assignment (PDF/DOC)")
+        builder.setTitle("Upload New Assignment")
 
         val layout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(50, 40, 50, 10)
         }
 
-        val titleEt = EditText(this).apply { hint = "Assignment Title" }
+        val subjectSpinner = Spinner(this).apply {
+            val subAdapter = ArrayAdapter(context, R.layout.spinner_item, allocatedSubjects)
+            subAdapter.setDropDownViewResource(R.layout.spinner_item)
+            adapter = subAdapter
+        }
+
+        val titleEt = EditText(this).apply { hint = "Assignment Topic (e.g. Lab 1)" }
         val deadlineEt = EditText(this).apply { hint = "Deadline (e.g. 30th Oct)" }
         
         val selectDocBtn = Button(this).apply {
-            text = "Select Document"
+            text = "Select Document (PDF/DOC)"
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         }
         
@@ -95,11 +120,13 @@ class FacultyAssignmentActivity : AppCompatActivity() {
         selectDocBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
-                type = "*/*" // Accept all files
+                type = "*/*" 
             }
             docPickerLauncher.launch(intent)
         }
 
+        layout.addView(TextView(this).apply { text = "Select Subject:"; setPadding(0, 10, 0, 5) })
+        layout.addView(subjectSpinner)
         layout.addView(titleEt)
         layout.addView(deadlineEt)
         layout.addView(selectDocBtn)
@@ -109,12 +136,13 @@ class FacultyAssignmentActivity : AppCompatActivity() {
         builder.setPositiveButton("Upload") { _, _ ->
             val t = titleEt.text.toString()
             val d = deadlineEt.text.toString()
+            val s = subjectSpinner.selectedItem.toString()
             if (t.isNotEmpty() && d.isNotEmpty() && selectedDocUri != null) {
-                saveAssignment(t, d, selectedDocUri!!)
+                saveAssignment(t, d, selectedDocUri!!, s, currentFacultyId)
                 NotificationHelper.sendNotification(
                     this, 
-                    "📝 New Assignment Assigned", 
-                    "Subject: $t | Deadline: $d",
+                    "📝 New Assignment: $s", 
+                    "Topic: $t | Deadline: $d",
                     AssignmentActivity::class.java
                 )
                 loadAssignments()
@@ -126,12 +154,11 @@ class FacultyAssignmentActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun saveAssignment(title: String, deadline: String, docUri: Uri) {
+    private fun saveAssignment(title: String, deadline: String, docUri: Uri, subject: String, facultyId: String) {
         val sharedPref = getSharedPreferences("AssignmentData", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         val id = UUID.randomUUID().toString()
         
-        // Request persistable permission
         try {
             contentResolver.takePersistableUriPermission(docUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
         } catch (e: Exception) {}
@@ -139,13 +166,15 @@ class FacultyAssignmentActivity : AppCompatActivity() {
         editor.putString("title_$id", title)
         editor.putString("deadline_$id", deadline)
         editor.putString("doc_$id", docUri.toString())
+        editor.putString("subject_$id", subject)
+        editor.putString("facultyId_$id", facultyId)
         
         val ids = sharedPref.getStringSet("assign_ids", mutableSetOf()) ?: mutableSetOf()
         val updatedIds = ids.toMutableSet()
         updatedIds.add(id)
         editor.putStringSet("assign_ids", updatedIds)
         editor.apply()
-        Toast.makeText(this, "Assignment with document uploaded!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Assignment uploaded successfully!", Toast.LENGTH_SHORT).show()
     }
 
     private fun showEditDialog(assign: Assignment) {
@@ -170,6 +199,8 @@ class FacultyAssignmentActivity : AppCompatActivity() {
         editor.remove("title_${assign.id}")
         editor.remove("deadline_${assign.id}")
         editor.remove("doc_${assign.id}")
+        editor.remove("subject_${assign.id}")
+        editor.remove("facultyId_${assign.id}")
         editor.apply()
         loadAssignments()
     }
@@ -199,7 +230,7 @@ class FacultyAssignmentActivity : AppCompatActivity() {
             .show()
     }
 
-    data class Assignment(val id: String, val title: String, val deadline: String, val docUri: String?)
+    data class Assignment(val id: String, val title: String, val deadline: String, val docUri: String?, val subject: String)
 
     class AssignmentAdapter(
         private val list: List<Assignment>, 
@@ -220,7 +251,7 @@ class FacultyAssignmentActivity : AppCompatActivity() {
         }
         override fun onBindViewHolder(h: ViewHolder, position: Int) {
             val a = list[position]
-            h.titleTv.text = if (a.docUri != null) "📄 ${a.title}" else a.title
+            h.titleTv.text = "[${a.subject}] ${a.title}"
             h.deadTv.text = "Deadline: ${a.deadline}"
             
             val subPref = h.itemView.context.getSharedPreferences("SubmissionData", Context.MODE_PRIVATE)

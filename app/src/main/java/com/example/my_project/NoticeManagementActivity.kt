@@ -5,11 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,8 +42,10 @@ class NoticeManagementActivity : AppCompatActivity() {
             val title = sharedPref.getString("notice_title_$id", "")
             val content = sharedPref.getString("notice_content_$id", "")
             val date = sharedPref.getString("notice_date_$id", "")
+            val targetSem = sharedPref.getString("notice_sem_$id", "All") ?: "All"
+            
             if (title != null && content != null && date != null) {
-                noticeList.add(Notice(id, title, content, date))
+                noticeList.add(Notice(id, title, content, date, targetSem))
             }
         }
         noticeList.sortByDescending { it.date }
@@ -63,13 +61,21 @@ class NoticeManagementActivity : AppCompatActivity() {
         layout.orientation = LinearLayout.VERTICAL
         layout.setPadding(50, 40, 50, 10)
 
+        val sems = arrayOf("All", "Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Sem 6", "Sem 7", "Sem 8")
+        val semSpinner = Spinner(this)
+        val semAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sems)
+        semSpinner.adapter = semAdapter
+
         val titleEt = EditText(this)
         titleEt.hint = "Notice Title"
-        layout.addView(titleEt)
-
+        
         val contentEt = EditText(this)
         contentEt.hint = "Notice Description"
         contentEt.minLines = 3
+
+        layout.addView(TextView(this).apply { text = "Target Semester:"; setPadding(0, 10, 0, 5) })
+        layout.addView(semSpinner)
+        layout.addView(titleEt)
         layout.addView(contentEt)
 
         builder.setView(layout)
@@ -77,12 +83,13 @@ class NoticeManagementActivity : AppCompatActivity() {
         builder.setPositiveButton("Post") { _, _ ->
             val title = titleEt.text.toString().trim()
             val content = contentEt.text.toString().trim()
+            val targetSem = semSpinner.selectedItem.toString()
+            
             if (title.isNotEmpty() && content.isNotEmpty()) {
-                saveNotice(title, content)
-                // Trigger Push Notification
+                saveNotice(title, content, targetSem)
                 NotificationHelper.sendNotification(
                     this, 
-                    "📣 New Notice: $title", 
+                    "📣 New Notice ($targetSem): $title", 
                     content, 
                     NotificationsActivity::class.java
                 )
@@ -94,7 +101,7 @@ class NoticeManagementActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun saveNotice(title: String, content: String) {
+    private fun saveNotice(title: String, content: String, targetSem: String) {
         val sharedPref = getSharedPreferences("CampusData", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         
@@ -104,6 +111,7 @@ class NoticeManagementActivity : AppCompatActivity() {
         editor.putString("notice_title_$noticeId", title)
         editor.putString("notice_content_$noticeId", content)
         editor.putString("notice_date_$noticeId", date)
+        editor.putString("notice_sem_$noticeId", targetSem)
 
         val noticeIds = sharedPref.getStringSet("notice_ids", mutableSetOf()) ?: mutableSetOf()
         val updatedIds = noticeIds.toMutableSet()
@@ -111,7 +119,7 @@ class NoticeManagementActivity : AppCompatActivity() {
         editor.putStringSet("notice_ids", updatedIds)
         
         editor.apply()
-        Toast.makeText(this, "Notice Posted", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Notice Posted for $targetSem", Toast.LENGTH_SHORT).show()
         loadNotices()
     }
 
@@ -126,6 +134,7 @@ class NoticeManagementActivity : AppCompatActivity() {
                 editor.remove("notice_title_${notice.id}")
                 editor.remove("notice_content_${notice.id}")
                 editor.remove("notice_date_${notice.id}")
+                editor.remove("notice_sem_${notice.id}")
 
                 val noticeIds = sharedPref.getStringSet("notice_ids", mutableSetOf()) ?: mutableSetOf()
                 val updatedIds = noticeIds.toMutableSet()
@@ -139,7 +148,7 @@ class NoticeManagementActivity : AppCompatActivity() {
             .show()
     }
 
-    data class Notice(val id: String, val title: String, val content: String, val date: String)
+    data class Notice(val id: String, val title: String, val content: String, val date: String, val targetSem: String)
 
     class NoticeAdapter(private val list: List<Notice>, val onDelete: (Notice) -> Unit) : RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -154,7 +163,7 @@ class NoticeManagementActivity : AppCompatActivity() {
         }
         override fun onBindViewHolder(h: ViewHolder, position: Int) {
             val item = list[position]
-            h.titleTv.text = item.title
+            h.titleTv.text = "[${item.targetSem}] ${item.title}"
             h.contentTv.text = item.content
             h.dateTv.text = "Posted on: ${item.date}"
             h.deleteBtn.setOnClickListener { onDelete(item) }
