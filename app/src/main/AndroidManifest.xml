@@ -3,6 +3,7 @@
     package="com.example.my_project">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +27,7 @@
         <activity android:name=".HomeActivity" android:exported="false" />
         <activity android:name=".AttendanceActivity" android:exported="false" />
         <activity android:name=".ChatActivity" android:exported="false" />
+        <activity android:name=".ChatUserListActivity" android:exported="false" />
         <activity android:name=".NotificationsActivity" android:exported="false" />
         <activity android:name=".TimetableActivity" android:exported="false" />
         <activity android:name=".ProfileActivity" android:exported="false" />

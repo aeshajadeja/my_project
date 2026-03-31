@@ -119,7 +119,7 @@ class HomeActivity : AppCompatActivity() {
         resultsCard.setOnClickListener { startActivity(Intent(this, ResultActivity::class.java)) }
         notifyCard.setOnClickListener { startActivity(Intent(this, NotificationsActivity::class.java)) }
         assignmentsCard.setOnClickListener { startActivity(Intent(this, AssignmentActivity::class.java)) }
-        chatCard.setOnClickListener { startActivity(Intent(this, ChatActivity::class.java)) }
+        chatCard.setOnClickListener { startActivity(Intent(this, ChatUserListActivity::class.java)) }
         syllabusCard.setOnClickListener { startActivity(Intent(this, SyllabusActivity::class.java)) }
         
         libraryCard.setOnClickListener { Toast.makeText(this, "Opening E-Library...", Toast.LENGTH_SHORT).show() }

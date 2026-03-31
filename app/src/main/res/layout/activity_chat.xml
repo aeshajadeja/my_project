@@ -4,15 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bgColor">
+    android:background="#F5F5F5">
 
-    <!-- Header with Back Button -->
+    <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/white"
+        android:elevation="4dp">
 
         <ImageButton
             android:id="@+id/backBtn"
@@ -20,73 +22,55 @@
             android:layout_height="48dp"
             android:src="@android:drawable/ic_menu_revert"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/primaryDarkColor"
+            app:tint="@color/primaryColor"
             android:contentDescription="Back" />
 
         <TextView
+            android:id="@+id/chatUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Teacher Chat"
-            android:textSize="22sp"
+            android:text="Chat"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/primaryDarkColor"
+            android:textColor="@color/black"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="16dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:padding="8dp"
+        android:clipToPadding="false"/>
 
-            <!-- Message 1 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dr. Smith: Hello everyone, please submit your assignments by Friday."
-                android:background="@drawable/edit_text_rounded"
-                android:padding="12dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="40dp"/>
-
-            <!-- Message 2 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="You: Sir, can we get an extension?"
-                android:background="@drawable/edit_text_rounded"
-                android:backgroundTint="@color/primaryLightColor"
-                android:textColor="@color/white"
-                android:padding="12dp"
-                android:layout_marginBottom="16dp"
-                android:layout_gravity="end"
-                android:layout_marginStart="40dp"/>
-            
-        </LinearLayout>
-    </ScrollView>
-
+    <!-- Input Area -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:layout_marginTop="8dp">
+        android:padding="12dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
         <EditText
+            android:id="@+id/messageEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Type a message..."
-            style="@style/InputStyle"
-            android:layout_marginBottom="0dp"/>
+            android:padding="12dp"
+            android:background="@drawable/edit_text_rounded"
+            android:maxLines="4"
+            android:inputType="textMultiLine"/>
+
         <ImageButton
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:id="@+id/sendBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@android:drawable/ic_menu_send"
-            android:backgroundTint="@color/primaryColor"
+            android:background="@drawable/circular_bg"
+            app:tint="@color/white"
             android:layout_marginStart="8dp"
             android:contentDescription="Send"/>
     </LinearLayout>

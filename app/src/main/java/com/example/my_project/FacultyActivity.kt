@@ -24,6 +24,7 @@ class FacultyActivity : AppCompatActivity() {
         val examResultCard = findViewById<MaterialCardView>(R.id.facultyExamResultCard)
         val syllabusCard = findViewById<MaterialCardView>(R.id.facultySyllabusCard)
         val noticeCard = findViewById<MaterialCardView>(R.id.facultyNoticeCard)
+        val chatCard = findViewById<MaterialCardView>(R.id.facultyChatCard)
         val profileCard = findViewById<MaterialCardView>(R.id.facultyProfileCard)
         val logoutBtn = findViewById<ImageView>(R.id.logoutBtn)
 
@@ -55,6 +56,10 @@ class FacultyActivity : AppCompatActivity() {
 
         noticeCard.setOnClickListener {
             startActivity(Intent(this, NoticeManagementActivity::class.java))
+        }
+
+        chatCard.setOnClickListener {
+            startActivity(Intent(this, ChatUserListActivity::class.java))
         }
 
         logoutBtn.setOnClickListener {
