@@ -206,31 +206,71 @@ class FacultyAssignmentActivity : AppCompatActivity() {
     }
 
     private fun viewSubmissions(assign: Assignment) {
-        val sharedPref = getSharedPreferences("SubmissionData", Context.MODE_PRIVATE)
-        val submissionList = sharedPref.getStringSet("list_${assign.id}", setOf()) ?: setOf()
+        val subPref = getSharedPreferences("SubmissionData", Context.MODE_PRIVATE)
+        val userIds = subPref.getStringSet("list_${assign.id}", setOf()) ?: setOf()
         
-        if (submissionList.isEmpty()) {
-            Toast.makeText(this, "No submissions yet for ${assign.title}", Toast.LENGTH_LONG).show()
+        if (userIds.isEmpty()) {
+            Toast.makeText(this, "No submissions yet", Toast.LENGTH_SHORT).show()
             return
         }
 
         val userPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
-        val details = StringBuilder()
-        details.append("Students who submitted:\n\n")
-        
-        for (studentId in submissionList) {
-            val name = userPref.getString("name_$studentId", "Unknown Student")
-            details.append("• $name (ID: $studentId)\n")
+        val submissionList = mutableListOf<Submission>()
+        for (id in userIds) {
+            val name = userPref.getString("name_$id", "Student") ?: "Student"
+            val fileUri = subPref.getString("file_${assign.id}_$id", "") ?: ""
+            submissionList.add(Submission(id, name, fileUri))
         }
 
-        AlertDialog.Builder(this)
-            .setTitle("Submissions: ${assign.title}")
-            .setMessage(details.toString())
-            .setPositiveButton("Close", null)
-            .show()
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Submissions: ${assign.title}")
+
+        val rv = RecyclerView(this).apply {
+            layoutManager = LinearLayoutManager(this@FacultyAssignmentActivity)
+            adapter = SubmissionAdapter(submissionList) { sub -> openSubmissionFile(sub) }
+        }
+        builder.setView(rv)
+        builder.setPositiveButton("Close", null)
+        builder.show()
+    }
+
+    private fun openSubmissionFile(sub: Submission) {
+        if (sub.fileUri.isEmpty()) {
+            Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show()
+            return
+        }
+        try {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(Uri.parse(sub.fileUri), "*/*")
+                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            }
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Cannot open file", Toast.LENGTH_SHORT).show()
+        }
     }
 
     data class Assignment(val id: String, val title: String, val deadline: String, val docUri: String?, val subject: String)
+    data class Submission(val studentId: String, val studentName: String, val fileUri: String)
+
+    class SubmissionAdapter(private val list: List<Submission>, val onView: (Submission) -> Unit) : RecyclerView.Adapter<SubmissionAdapter.ViewHolder>() {
+        class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+            val nameTv: TextView = v.findViewById(R.id.studentNameTv)
+            val idTv: TextView = v.findViewById(R.id.studentIdTv)
+            val viewBtn: Button = v.findViewById(R.id.viewFileBtn)
+        }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val v = LayoutInflater.from(parent.context).inflate(R.layout.item_submission, parent, false)
+            return ViewHolder(v)
+        }
+        override fun onBindViewHolder(h: ViewHolder, position: Int) {
+            val s = list[position]
+            h.nameTv.text = s.studentName
+            h.idTv.text = "ID: ${s.studentId}"
+            h.viewBtn.setOnClickListener { onView(s) }
+        }
+        override fun getItemCount() = list.size
+    }
 
     class AssignmentAdapter(
         private val list: List<Assignment>, 

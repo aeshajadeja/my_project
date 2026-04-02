@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Forgot Password?"
-            android:textColor="@color/secondaryDarkColor"
+            android:textColor="@color/accentColor"
             android:textStyle="bold"
             android:layout_gravity="end"
             android:layout_marginBottom="28dp"

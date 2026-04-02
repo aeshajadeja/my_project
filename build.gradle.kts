@@ -6,3 +6,9 @@ plugins {
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.ksp) apply false
 }
+
+allprojects {
+    // This redirecting the build directory to C:/android-builds prevents OneDrive 
+    // from locking files during the build process, which fixes "Unable to delete directory" errors.
+    buildDir = file("C:/android-builds/${rootProject.name}/${project.name}")
+}

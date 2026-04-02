@@ -9,7 +9,7 @@
         android:pathData="M12,1L3,5v6c0,5.55 3.84,10.74 9,12c5.16,-1.26 9,-6.45 9,-12V5L12,1z" />
     <!-- Graduation Cap Symbol -->
     <path
-        android:fillColor="@color/secondaryColor"
+        android:fillColor="@color/accentMuted"
         android:pathData="M12,6l-5,2.5L12,11l5,-2.5L12,6zM15,10.5V12l-3,1.5l-3,-1.5v-1.5l3,1.5L15,10.5z" />
     <!-- Sparkle/Star -->
     <path

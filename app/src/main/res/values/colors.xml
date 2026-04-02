@@ -1,37 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Solid Professional Campus Theme -->
-    <color name="primaryColor">#102C57</color> <!-- Solid Deep Navy -->
-    <color name="primaryLightColor">#1679AB</color>
-    <color name="primaryDarkColor">#071931</color>
+    <!-- Modern Minimal Palette -->
+    <color name="primaryColor">#2C2C2C</color> <!-- Soft Charcoal -->
+    <color name="primaryDarkColor">#1A1A1A</color>
+    <color name="primaryLightColor">#4D4D4D</color>
 
-    <color name="secondaryColor">#15B392</color> <!-- Solid Emerald -->
-    <color name="secondaryLightColor">#73EC8B</color>
-    <color name="secondaryDarkColor">#0B666A</color>
+    <color name="accentColor">#A29BFE</color> <!-- Soft Lavender -->
+    <color name="accentMuted">#6C9A8B</color> <!-- Muted Teal -->
+    <color name="secondaryColor">#F5F5F5</color> <!-- Light Grey -->
+    <color name="lightBlue">#E3F2FD</color>
 
     <!-- Backgrounds -->
-    <color name="bgColor">#FFFFFF</color> 
-    <color name="backgroundColor">#FFFFFF</color> 
-    <color name="surfaceColor">#FFFFFF</color>
+    <color name="bgColor">#FAFAFA</color> <!-- Off-white -->
     <color name="cardColor">#FFFFFF</color>
+    <color name="cardBackground">#FFFFFF</color>
+    <color name="surfaceColor">#FFFFFF</color>
 
-    <!-- GUARANTEED VISIBILITY: Solid Black Text -->
-    <color name="textColorPrimary">#000000</color> 
-    <color name="textDark">#000000</color>
-    <color name="textColorSecondary">#222222</color> 
-    <color name="textMuted">#444444</color>
+
+    <!-- Typography -->
+    <color name="textColorPrimary">#333333</color> <!-- Dark Grey -->
+    <color name="textColorSecondary">#666666</color>
+    <color name="textPrimary">#333333</color>
+    <color name="textSecondary">#666666</color>
+    <color name="textMuted">#999999</color>
+
+    
+    <!-- Standard Colors -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="dividerColor">#CCCCCC</color>
+    <color name="dividerColor">#EEEEEE</color>
+
 
     <!-- Semantic Colors -->
-    <color name="success">#1B5E20</color>
-    <color name="warning">#E65100</color>
-    <color name="error">#B71C1C</color>
+    <color name="success">#6C9A8B</color>
+    <color name="warning">#FAB1A0</color>
+    <color name="error">#FF7675</color>
 
-    <!-- Module Accents -->
-    <color name="accentBlue">#0D47A1</color>
-    <color name="accentPurple">#4A148C</color>
-    <color name="accentPink">#880E4F</color>
-    <color name="accentTeal">#004D40</color>
+
+    <!-- Legacy Compatibility Aliases -->
+    <color name="primary">#2C2C2C</color>
+    <color name="primaryDark">#1A1A1A</color>
+    <color name="accent">#A29BFE</color>
+    <color name="background">#FAFAFA</color>
+    <color name="divider">#EEEEEE</color>
+
 </resources>
