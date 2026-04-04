@@ -51,7 +51,8 @@
                 android:src="@android:drawable/ic_menu_myplaces"
                 android:scaleType="centerCrop"
                 app:tint="@color/primaryColor"
-                android:padding="8dp"/>
+                android:padding="8dp"
+                android:contentDescription="Profile"/>
         </com.google.android.material.card.MaterialCardView>
 
         <ImageButton
@@ -85,7 +86,7 @@
                 <!-- Mark Attendance -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyAttendanceCard"
-                    style="@style/CampusCardStyle"
+                    style="@style/CardStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -97,7 +98,7 @@
                         android:orientation="vertical"
                         android:padding="20dp"
                         android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_agenda" app:tint="@color/primaryColor"/>
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_agenda" app:tint="@color/primaryColor" android:contentDescription="Attendance"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Attendance" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -105,7 +106,7 @@
                 <!-- Assignments -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyAssignmentsCard"
-                    style="@style/CampusCardStyle"
+                    style="@style/CardStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1">
@@ -115,7 +116,7 @@
                         android:orientation="vertical"
                         android:padding="20dp"
                         android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/primaryDarkColor"/>
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/primaryDarkColor" android:contentDescription="Assignments"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Assignments" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -123,7 +124,7 @@
                 <!-- Results & Exams -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyExamResultCard"
-                    style="@style/CampusCardStyle"
+                    style="@style/CardStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -135,7 +136,7 @@
                         android:orientation="vertical"
                         android:padding="20dp"
                         android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/btn_star_big_on" app:tint="@color/secondaryColor"/>
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/btn_star_big_on" app:tint="@color/accentColor" android:contentDescription="Results"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Exams &amp; Results" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -143,7 +144,7 @@
                 <!-- Schedule -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyScheduleCard"
-                    style="@style/CampusCardStyle"
+                    style="@style/CardStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -155,15 +156,15 @@
                         android:orientation="vertical"
                         android:padding="20dp"
                         android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_today" app:tint="@color/primaryLightColor"/>
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_today" app:tint="@color/primaryLightColor" android:contentDescription="Schedule"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="My Schedule" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Syllabus (New) -->
+                <!-- Syllabus -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultySyllabusCard"
-                    style="@style/CampusCardStyle"
+                    style="@style/CardStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1">
@@ -173,15 +174,15 @@
                         android:orientation="vertical"
                         android:padding="20dp"
                         android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_save" app:tint="@color/accentPurple"/>
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_save" app:tint="@color/accentMuted" android:contentDescription="Syllabus"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Syllabus" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Announcements (New) -->
+                <!-- Announcements -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyNoticeCard"
-                    style="@style/CampusCardStyle"
+                    style="@style/CardStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1">
@@ -191,7 +192,7 @@
                         android:orientation="vertical"
                         android:padding="20dp"
                         android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_dialog_info" app:tint="@color/accentBlue"/>
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_dialog_info" app:tint="@color/primaryLightColor" android:contentDescription="Announcements"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Announcements" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -199,7 +200,7 @@
                 <!-- Messages -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyChatCard"
-                    style="@style/CampusCardStyle"
+                    style="@style/CardStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -211,7 +212,7 @@
                         android:orientation="vertical"
                         android:padding="20dp"
                         android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/stat_notify_chat" app:tint="@color/success"/>
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/stat_notify_chat" app:tint="@color/success" android:contentDescription="Messages"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Messages" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
