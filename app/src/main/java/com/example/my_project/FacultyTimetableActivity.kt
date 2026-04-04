@@ -28,6 +28,7 @@ class FacultyTimetableActivity : AppCompatActivity() {
     private var selectedImageUri: Uri? = null
     private var imageStatusTv: TextView? = null
 
+    // Launcher for selecting Schedule Image
     private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK && result.data != null) {
             selectedImageUri = result.data?.data
@@ -57,7 +58,6 @@ class FacultyTimetableActivity : AppCompatActivity() {
         val currentFacultyId = userPref.getString("current_userId", "") ?: ""
 
         lectureList.clear()
-        
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val todayStr = sdf.format(Date())
         val today = sdf.parse(todayStr) ?: Date()
@@ -79,42 +79,40 @@ class FacultyTimetableActivity : AppCompatActivity() {
         }
         
         lectureList.sortWith(compareBy({ it.date }, { it.time }))
-        
         adapter = TimetableAdapter(lectureList, 
             { lec -> showRescheduleDialog(lec) }, 
             { lec -> showCancelDialog(lec) },
-            { lec -> viewImage(lec) }
+            { lec -> viewScheduleImage(lec) }
         )
         recyclerView.adapter = adapter
     }
 
     private fun showAddExtraDialog() {
         val userPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
-        val currentFacultyId = userPref.getString("current_userId", "") ?: ""
+        val currentId = userPref.getString("current_userId", "") ?: ""
         
         val allocPref = getSharedPreferences("AllocationData", Context.MODE_PRIVATE)
-        val allocatedSubjects = allocPref.getStringSet("subjects_$currentFacultyId", setOf())?.toList() ?: listOf()
+        val allocatedSubjects = allocPref.getStringSet("subjects_$currentId", setOf())?.toList() ?: listOf()
 
         if (allocatedSubjects.isEmpty()) {
-            Toast.makeText(this, "No subjects allocated to you", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "No subjects allocated to you", Toast.LENGTH_SHORT).show()
             return
         }
 
         selectedImageUri = null
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Add Lecture with Image")
+        builder.setTitle("Upload New Schedule")
 
-        val layout = LinearLayout(this)
-        layout.orientation = LinearLayout.VERTICAL
-        layout.setPadding(50, 40, 50, 10)
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(50, 40, 50, 10)
+        }
 
         val subSpinner = Spinner(this).apply {
             val subAdapter = ArrayAdapter(context, R.layout.spinner_item, allocatedSubjects)
             subAdapter.setDropDownViewResource(R.layout.spinner_item)
             adapter = subAdapter
         }
-        layout.addView(TextView(this).apply { text = "Select Subject:" })
-        layout.addView(subSpinner)
 
         val dateBtn = Button(this).apply { text = "Select Date" }
         var selectedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
@@ -127,16 +125,13 @@ class FacultyTimetableActivity : AppCompatActivity() {
                 dateBtn.text = "Date: $selectedDate"
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
         }
-        layout.addView(dateBtn)
 
-        val timeEt = EditText(this).apply { hint = "Time (e.g. 03:00 PM)" }
-        layout.addView(timeEt)
-
+        val timeEt = EditText(this).apply { hint = "Time (e.g. 10:00 AM)" }
         val detailEt = EditText(this).apply { hint = "Details (Batch/Room)" }
-        layout.addView(detailEt)
+        
+        val selectImgBtn = Button(this).apply { text = "📸 Select Schedule Image" }
+        imageStatusTv = TextView(this).apply { text = "Optional: Upload image of schedule"; setPadding(0, 10, 0, 20) }
 
-        val selectImgBtn = Button(this).apply { text = "Upload Schedule Image (Optional)" }
-        imageStatusTv = TextView(this).apply { text = "No image selected"; setPadding(0, 10, 0, 20) }
         selectImgBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                 addCategory(Intent.CATEGORY_OPENABLE)
@@ -144,6 +139,12 @@ class FacultyTimetableActivity : AppCompatActivity() {
             }
             imagePickerLauncher.launch(intent)
         }
+
+        layout.addView(TextView(this).apply { text = "Subject:" })
+        layout.addView(subSpinner)
+        layout.addView(dateBtn)
+        layout.addView(timeEt)
+        layout.addView(detailEt)
         layout.addView(selectImgBtn)
         layout.addView(imageStatusTv)
 
@@ -153,7 +154,7 @@ class FacultyTimetableActivity : AppCompatActivity() {
             val t = timeEt.text.toString()
             val d = detailEt.text.toString()
             if (s.isNotEmpty() && t.isNotEmpty()) {
-                saveLecture(s, t, d, currentFacultyId, selectedDate, selectedImageUri?.toString())
+                saveLecture(s, t, d, currentId, selectedDate, selectedImageUri?.toString())
                 loadSchedule()
             }
         }
@@ -161,46 +162,14 @@ class FacultyTimetableActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun showRescheduleDialog(lec: Lecture) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Reschedule Class")
-        val layout = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(50, 40, 50, 10) }
-        val timeEt = EditText(this).apply { hint = "New Time"; setText(lec.time) }
-        layout.addView(timeEt)
-        builder.setView(layout)
-        builder.setPositiveButton("Update") { _, _ ->
-            val newTime = timeEt.text.toString()
-            if (newTime.isNotEmpty()) {
-                getSharedPreferences("FacultySchedule", Context.MODE_PRIVATE).edit().putString("lec_time_${lec.id}", newTime).apply()
-                loadSchedule()
-            }
-        }
-        builder.setNegativeButton("Back", null)
-        builder.show()
-    }
-
-    private fun showCancelDialog(lec: Lecture) {
-        AlertDialog.Builder(this).setTitle("Cancel Lecture").setMessage("Confirm cancel?")
-            .setPositiveButton("Confirm") { _, _ ->
-                val sharedPref = getSharedPreferences("FacultySchedule", Context.MODE_PRIVATE)
-                val editor = sharedPref.edit()
-                val ids = sharedPref.getStringSet("lecture_ids", mutableSetOf())?.toMutableSet()
-                ids?.remove(lec.id)
-                editor.putStringSet("lecture_ids", ids)
-                editor.remove("lec_sub_${lec.id}")
-                editor.remove("lec_time_${lec.id}")
-                editor.remove("lec_img_${lec.id}")
-                editor.apply()
-                loadSchedule()
-            }.setNegativeButton("No", null).show()
-    }
-
-    private fun viewImage(lec: Lecture) {
+    private fun viewScheduleImage(lec: Lecture) {
         if (lec.imageUri == null) return
         val builder = AlertDialog.Builder(this)
-        val iv = ImageView(this)
-        iv.setImageURI(Uri.parse(lec.imageUri))
-        iv.adjustViewBounds = true
+        val iv = ImageView(this).apply {
+            setImageURI(Uri.parse(lec.imageUri))
+            adjustViewBounds = true
+            setPadding(20, 20, 20, 20)
+        }
         builder.setView(iv)
         builder.setPositiveButton("Close", null)
         builder.show()
@@ -228,43 +197,70 @@ class FacultyTimetableActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    private fun showRescheduleDialog(lec: Lecture) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Reschedule Class")
+        val timeEt = EditText(this).apply { hint = "New Time"; setText(lec.time) }
+        builder.setView(timeEt)
+        builder.setPositiveButton("Update") { _, _ ->
+            val newTime = timeEt.text.toString()
+            if (newTime.isNotEmpty()) {
+                getSharedPreferences("FacultySchedule", Context.MODE_PRIVATE).edit().putString("lec_time_${lec.id}", newTime).apply()
+                loadSchedule()
+            }
+        }
+        builder.show()
+    }
+
+    private fun showCancelDialog(lec: Lecture) {
+        AlertDialog.Builder(this).setTitle("Cancel Lecture").setMessage("Are you sure?")
+            .setPositiveButton("Confirm") { _, _ ->
+                val sharedPref = getSharedPreferences("FacultySchedule", Context.MODE_PRIVATE)
+                val editor = sharedPref.edit()
+                val ids = sharedPref.getStringSet("lecture_ids", mutableSetOf())?.toMutableSet()
+                ids?.remove(lec.id)
+                editor.putStringSet("lecture_ids", ids)
+                editor.apply()
+                loadSchedule()
+            }.show()
+    }
+
     data class Lecture(val id: String, val subject: String, var time: String, val details: String, val date: String, val imageUri: String?)
 
-    class TimetableAdapter(private val list: List<Lecture>, val onResched: (Lecture) -> Unit, val onCancel: (Lecture) -> Unit, val onViewImg: (Lecture) -> Unit) : RecyclerView.Adapter<TimetableAdapter.ViewHolder>() {
+    class TimetableAdapter(
+        private val list: List<Lecture>, 
+        val onResched: (Lecture) -> Unit, 
+        val onCancel: (Lecture) -> Unit,
+        val onViewImg: (Lecture) -> Unit
+    ) : RecyclerView.Adapter<TimetableAdapter.ViewHolder>() {
         class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
             val subTv: TextView = v.findViewById(R.id.subjectTv)
             val timeTv: TextView = v.findViewById(R.id.timeTv)
             val detTv: TextView = v.findViewById(R.id.detailsTv)
             val reschedBtn: Button = v.findViewById(R.id.rescheduleBtn)
             val cancelBtn: Button = v.findViewById(R.id.cancelBtn)
-            val imgBtn: ImageButton = ImageButton(v.context).apply { 
-                setImageResource(android.R.drawable.ic_menu_gallery)
-                background = null
+            val viewBtn: Button = Button(v.context).apply { 
+                text = "View Image"
+                visibility = View.GONE
             }
         }
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val v = LayoutInflater.from(parent.context).inflate(R.layout.item_faculty_timetable, parent, false)
-            // Dynamically add image button to layout for simplicity
-            (v as ViewGroup).addView(ImageButton(parent.context).apply { 
-                id = View.generateViewId()
-                tag = "viewImgBtn"
-                setImageResource(android.R.drawable.ic_menu_gallery)
-                background = null
-                layoutParams = LinearLayout.LayoutParams(100, 100)
-            })
-            return ViewHolder(v)
+            val vh = ViewHolder(v)
+            (v as ViewGroup).addView(vh.viewBtn) // Temporary dynamic add
+            return vh
         }
         override fun onBindViewHolder(h: ViewHolder, position: Int) {
             val l = list[position]
             h.subTv.text = "${l.subject} (${l.date})"
             h.timeTv.text = l.time
             h.detTv.text = l.details
+            
+            h.viewBtn.visibility = if (l.imageUri != null) View.VISIBLE else View.GONE
+            h.viewBtn.setOnClickListener { onViewImg(l) }
+            
             h.reschedBtn.setOnClickListener { onResched(l) }
             h.cancelBtn.setOnClickListener { onCancel(l) }
-            
-            val vImgBtn = h.itemView.findViewWithTag<View>("viewImgBtn")
-            vImgBtn?.visibility = if (l.imageUri != null) View.VISIBLE else View.GONE
-            vImgBtn?.setOnClickListener { onViewImg(l) }
         }
         override fun getItemCount() = list.size
     }

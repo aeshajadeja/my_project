@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/primaryColor">
 
         <ImageButton
             android:id="@+id/backBtn"
@@ -20,7 +21,7 @@
             android:layout_height="48dp"
             android:src="@android:drawable/ic_menu_revert"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/primaryDarkColor"
+            app:tint="@color/white"
             android:contentDescription="Back" />
 
         <TextView
@@ -29,7 +30,7 @@
             android:text="Subject Allocation"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="@color/textColorPrimary"
+            android:textColor="@color/white"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 
@@ -44,10 +45,9 @@
             android:padding="16dp">
 
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
                 android:layout_marginBottom="24dp">
 
                 <LinearLayout
@@ -59,7 +59,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Allocate New Subject"
+                        android:text="Bulk Allocation (Max 3)"
                         android:textStyle="bold"
                         android:textColor="@color/primaryColor"
                         android:textSize="18sp"
@@ -70,45 +70,51 @@
                         android:layout_height="wrap_content"
                         android:text="Select Faculty"
                         android:textSize="14sp"
+                        android:textColor="@color/textColorSecondary"
                         android:layout_marginBottom="4dp"/>
                     <Spinner
                         android:id="@+id/facultySpinner"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@drawable/edit_text_rounded"
+                        android:background="@drawable/spinner_bg"
                         android:layout_marginBottom="16dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select Subject"
+                        android:text="Assigned Subjects"
                         android:textSize="14sp"
+                        android:textColor="@color/textColorSecondary"
                         android:layout_marginBottom="4dp"/>
-                    <Spinner
-                        android:id="@+id/subjectSpinner"
+                    
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/selectSubjectsBtn"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/edit_text_rounded"
-                        android:layout_marginBottom="16dp"/>
+                        android:layout_height="wrap_content"
+                        android:text="Pick Subjects (0 selected)"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_marginBottom="16dp"
+                        app:icon="@android:drawable/ic_menu_add"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select Semester"
+                        android:text="Common Semester"
                         android:textSize="14sp"
+                        android:textColor="@color/textColorSecondary"
                         android:layout_marginBottom="4dp"/>
                     <Spinner
                         android:id="@+id/semesterSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@drawable/edit_text_rounded"
+                        android:background="@drawable/spinner_bg"
                         android:layout_marginBottom="24dp"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/allocateBtn"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:text="Confirm Allocation"
+                        android:text="Allocate All Selected"
                         style="@style/ButtonStyle"/>
 
                 </LinearLayout>
