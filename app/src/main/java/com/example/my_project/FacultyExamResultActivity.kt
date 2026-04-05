@@ -34,26 +34,20 @@ class FacultyExamResultActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.backBtn).setOnClickListener { finish() }
         
         findViewById<MaterialButton>(R.id.createTestBtn).setOnClickListener {
-            val subject = if (subjectSpinner.isEnabled && subjectSpinner.selectedItem != null) {
-                facultyAllocations[subjectSpinner.selectedItemPosition].first
-            } else "N/A"
-            
-            if (subject == "N/A" || subject == "No Subjects Allocated") {
+            if (subjectSpinner.selectedItem == null || subjectSpinner.selectedItem.toString() == "No Subjects Allocated") {
                 Toast.makeText(this, "No subjects allocated to you", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            val subject = facultyAllocations[subjectSpinner.selectedItemPosition].first
             Toast.makeText(this, "Internal Test Created for $subject", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<MaterialButton>(R.id.saveMarksBtn).setOnClickListener {
-            val subject = if (subjectSpinner.isEnabled && subjectSpinner.selectedItem != null) {
-                facultyAllocations[subjectSpinner.selectedItemPosition].first
-            } else "N/A"
-            
-            if (subject == "N/A" || subject == "No Subjects Allocated") {
+            if (subjectSpinner.selectedItem == null || subjectSpinner.selectedItem.toString() == "No Subjects Allocated") {
                 Toast.makeText(this, "No subjects allocated to you", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            val subject = facultyAllocations[subjectSpinner.selectedItemPosition].first
             saveMarks(subject)
         }
 
@@ -80,7 +74,7 @@ class FacultyExamResultActivity : AppCompatActivity() {
         facultyAllocations.clear()
         for (allocId in allAllocIds) {
             val fId = allocPref.getString("fac_id_$allocId", "")
-            if (fId == currentId(currentFacultyId)) { // Helper just in case
+            if (fId == currentFacultyId) {
                 val sub = allocPref.getString("subject_$allocId", "") ?: ""
                 val sem = allocPref.getString("semester_$allocId", "") ?: ""
                 facultyAllocations.add(sub to sem)
@@ -101,8 +95,6 @@ class FacultyExamResultActivity : AppCompatActivity() {
         }
     }
     
-    private fun currentId(id: String) = id
-
     private fun loadStudents(targetSem: String) {
         val sharedPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
         val allIds = sharedPref.getStringSet("all_user_ids", setOf()) ?: setOf()
@@ -126,11 +118,12 @@ class FacultyExamResultActivity : AppCompatActivity() {
     }
 
     private fun loadSavedMarksForSubject(subject: String) {
-        // Implementation for loading existing marks if needed
+        val sharedPref = getSharedPreferences("ExamData", Context.MODE_PRIVATE)
+        // Implementation can be added here to pre-fill marksData
     }
 
     private fun saveMarks(subject: String) {
-        if (marksData.isEmpty()) {
+        if (marksData.isEmpty() && studentList.isNotEmpty()) {
             Toast.makeText(this, "Please enter marks for students", Toast.LENGTH_SHORT).show()
             return
         }
@@ -156,7 +149,7 @@ class FacultyExamResultActivity : AppCompatActivity() {
         
         editor.apply()
         
-        // Update Stats
+        // Update Stats UI
         val avg = if (count > 0) total / count else 0
         findViewById<TextView>(R.id.statsAverageTv).text = "Average Score ($subject): $avg%"
         findViewById<TextView>(R.id.statsTopperTv).text = "Topper: $topperName ($maxMark%)"
@@ -180,6 +173,11 @@ class FacultyExamResultActivity : AppCompatActivity() {
             val s = list[position]
             h.nameTv.text = s.name
             h.idTv.text = "ID: ${s.id}"
+            
+            // Reload saved mark if any
+            val sharedPref = h.itemView.context.getSharedPreferences("ExamData", Context.MODE_PRIVATE)
+            // We need the subject name here, but adapter doesn't have it. 
+            // Better to handle data injection from activity.
             
             h.markEt.setOnFocusChangeListener { _, hasFocus ->
                 if (!hasFocus) {

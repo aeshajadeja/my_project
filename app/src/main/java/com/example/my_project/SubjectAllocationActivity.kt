@@ -122,20 +122,19 @@ class SubjectAllocationActivity : AppCompatActivity() {
             return
         }
 
+        val allAllocIds = sharedPref.getStringSet("allocation_ids", mutableSetOf()) ?: mutableSetOf()
+        val updatedIds = allAllocIds.toMutableSet()
+
         for (subject in selectedSubjects) {
             val allocId = UUID.randomUUID().toString()
             editor.putString("fac_id_$allocId", faculty.id)
             editor.putString("fac_name_$allocId", faculty.name)
             editor.putString("subject_$allocId", subject)
             editor.putString("semester_$allocId", semester)
-
-            val allAllocIds = sharedPref.getStringSet("allocation_ids", mutableSetOf()) ?: mutableSetOf()
-            val updatedIds = allAllocIds.toMutableSet()
             updatedIds.add(allocId)
-            editor.putStringSet("allocation_ids", updatedIds)
         }
 
-        // Update the quick lookup set for this faculty
+        editor.putStringSet("allocation_ids", updatedIds)
         editor.putStringSet("subjects_${faculty.id}", totalAfterAllocation)
         editor.apply()
 
@@ -158,7 +157,9 @@ class SubjectAllocationActivity : AppCompatActivity() {
             val fName = sharedPref.getString("fac_name_$id", "") ?: ""
             val sub = sharedPref.getString("subject_$id", "") ?: ""
             val sem = sharedPref.getString("semester_$id", "") ?: ""
-            allocationList.add(Allocation(id, fId, fName, sub, sem))
+            if (fId.isNotEmpty()) {
+                allocationList.add(Allocation(id, fId, fName, sub, sem))
+            }
         }
         
         adapter = AllocationAdapter(allocationList) { alloc -> deleteAllocation(alloc) }
@@ -177,7 +178,12 @@ class SubjectAllocationActivity : AppCompatActivity() {
                 ids?.remove(alloc.id)
                 editor.putStringSet("allocation_ids", ids)
                 
-                // Refresh subjects set
+                editor.remove("fac_id_${alloc.id}")
+                editor.remove("fac_name_${alloc.id}")
+                editor.remove("subject_${alloc.id}")
+                editor.remove("semester_${alloc.id}")
+                
+                // Refresh subjects set for this faculty
                 val updatedSubSet = mutableSetOf<String>()
                 val allRemainingIds = ids ?: setOf()
                 for (id in allRemainingIds) {
@@ -187,13 +193,8 @@ class SubjectAllocationActivity : AppCompatActivity() {
                     }
                 }
                 editor.putStringSet("subjects_${alloc.facultyId}", updatedSubSet)
-
-                editor.remove("fac_id_${alloc.id}")
-                editor.remove("fac_name_${alloc.id}")
-                editor.remove("subject_${alloc.id}")
-                editor.remove("semester_${alloc.id}")
-                editor.apply()
                 
+                editor.apply()
                 loadAllocations()
             }
             .setNegativeButton("Cancel", null)

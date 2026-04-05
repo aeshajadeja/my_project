@@ -29,6 +29,7 @@ class AdminActivity : AppCompatActivity() {
         val noticeCard = findViewById<MaterialCardView>(R.id.noticeManagementCard)
         val courseCard = findViewById<MaterialCardView>(R.id.courseManagementCard)
         val allocationCard = findViewById<MaterialCardView>(R.id.allocationCard)
+        val scheduleCard = findViewById<MaterialCardView>(R.id.scheduleManagementCard)
         val profileCard = findViewById<MaterialCardView>(R.id.adminProfileCard)
         val logoutBtn = findViewById<ImageView>(R.id.logoutBtn)
 
@@ -63,6 +64,10 @@ class AdminActivity : AppCompatActivity() {
             startActivity(Intent(this, SubjectAllocationActivity::class.java))
         }
 
+        scheduleCard.setOnClickListener {
+            startActivity(Intent(this, AdminScheduleActivity::class.java))
+        }
+
         logoutBtn.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("Logout")
@@ -92,8 +97,10 @@ class AdminActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.adminWelcomeTv).text = "Welcome, $name"
         if (imgUri != null) {
-            profileIcon.setImageURI(Uri.parse(imgUri))
-            profileIcon.setPadding(0, 0, 0, 0)
+            try {
+                profileIcon.setImageURI(Uri.parse(imgUri))
+                profileIcon.setPadding(0, 0, 0, 0)
+            } catch (e: Exception) {}
         }
     }
 

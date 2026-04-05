@@ -39,17 +39,6 @@
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/textColorPrimary"
                 android:layout_marginStart="8dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/addExtraLectureBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add"
-                app:icon="@android:drawable/ic_input_add"
-                app:iconTint="@color/primaryColor"
-                android:textColor="@color/primaryColor"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:fontFamily="sans-serif-black"/>
         </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>

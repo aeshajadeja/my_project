@@ -46,6 +46,7 @@
         <activity android:name=".FacultyExamResultActivity" android:exported="false" />
         <activity android:name=".CourseManagementActivity" android:exported="false" />
         <activity android:name=".SubjectAllocationActivity" android:exported="false" />
+        <activity android:name=".AdminScheduleActivity" android:exported="false" />
 
     </application>
 
