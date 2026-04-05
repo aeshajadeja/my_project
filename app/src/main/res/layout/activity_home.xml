@@ -15,8 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="28dp"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="40dp"
             android:paddingBottom="16dp"
             android:gravity="center_vertical">
 
@@ -32,14 +32,14 @@
                     android:layout_height="wrap_content"
                     android:text="Hi, Student!"
                     android:textColor="@color/textColorPrimary"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="26sp"
+                    android:fontFamily="sans-serif-medium" />
 
                 <TextView
                     android:id="@+id/dateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
+                    android:text="Ready for today's classes?"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -51,15 +51,17 @@
                 android:src="@android:drawable/ic_lock_power_off"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 app:tint="@color/error"
+                android:padding="12dp"
                 android:contentDescription="Logout"
                 android:layout_marginEnd="8dp"/>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/profileCard"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:cardCornerRadius="25dp"
-                app:cardElevation="2dp"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/pastelPurple"
                 android:clickable="true"
                 android:focusable="true">
 
@@ -70,7 +72,7 @@
                     android:src="@android:drawable/ic_menu_myplaces"
                     android:scaleType="centerCrop"
                     app:tint="@color/primaryColor"
-                    android:padding="8dp"
+                    android:padding="12dp"
                     android:contentDescription="Profile"/>
             </com.google.android.material.card.MaterialCardView>
 
@@ -88,39 +90,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="20dp"
             android:paddingBottom="40dp">
 
+            <!-- Selection Card -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="@color/peachCream">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Set Your Context"
-                        android:textStyle="bold"
-                        android:textColor="@color/primaryColor"
-                        android:textSize="14sp"/>
+                        android:text="Your Academic Profile"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="16sp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="12dp">
 
                         <Spinner
                             android:id="@+id/homeYearSpinner"
                             android:layout_width="0dp"
-                            android:layout_height="48dp"
+                            android:layout_height="52dp"
                             android:layout_weight="1"
                             android:background="@drawable/spinner_bg"
                             android:layout_marginEnd="6dp"/>
@@ -128,7 +132,7 @@
                         <Spinner
                             android:id="@+id/homeSemesterSpinner"
                             android:layout_width="0dp"
-                            android:layout_height="48dp"
+                            android:layout_height="52dp"
                             android:layout_weight="1"
                             android:background="@drawable/spinner_bg"
                             android:layout_marginStart="6dp"/>
@@ -143,11 +147,11 @@
                 android:id="@+id/lockNoteTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="⚠️ Unlock campus services by selecting your Batch and Semester above."
-                android:textColor="@color/error"
+                android:text="Please select your Batch and Semester to unlock all features."
+                android:textColor="@color/primaryColor"
+                android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:padding="20dp"
-                android:background="@drawable/spinner_bg"
+                android:padding="32dp"
                 android:layout_marginBottom="24dp"/>
 
             <LinearLayout
@@ -157,19 +161,20 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
+                <!-- Feature Hero Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/quizCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="@color/primaryColor"
-                    android:layout_marginBottom="24dp"
-                    app:cardElevation="4dp">
+                    app:cardCornerRadius="28dp"
+                    app:cardBackgroundColor="@color/royalPurple"
+                    android:layout_marginBottom="28dp"
+                    app:cardElevation="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="24dp"
+                        android:padding="28dp"
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
 
@@ -182,27 +187,35 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Daily Quiz"
+                                android:text="Daily Quiz Challenge"
                                 android:textColor="#CCFFFFFF"
                                 android:textSize="14sp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Test Your Knowledge"
+                                android:text="Test Your Skills"
                                 android:textColor="@color/white"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
+                                android:textSize="22sp"
+                                android:fontFamily="sans-serif-black"
                                 android:layout_marginTop="4dp"/>
 
                         </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@android:drawable/btn_star_big_on"
-                            app:tint="@color/white"
-                            android:contentDescription="Quiz"/>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            app:cardCornerRadius="18dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="#33FFFFFF">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@android:drawable/btn_star_big_on"
+                                app:tint="@color/white"
+                                android:padding="14dp"
+                                android:contentDescription="Quiz"/>
+                        </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
 
@@ -212,10 +225,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Campus Services"
-                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-black"
                     android:textColor="@color/textColorPrimary"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="12dp"/>
+                    android:textSize="20sp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="4dp"/>
 
                 <GridLayout
                     android:layout_width="match_parent"
@@ -224,19 +238,21 @@
                     android:alignmentMode="alignMargins"
                     android:columnOrderPreserved="false">
 
+                    <!-- Grid Item 1: Attendance -->
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/attendanceCard"
                         style="@style/CardStyle"
-                        android:layout_columnWeight="1">
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/softBlue">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="16dp"
+                            android:padding="24dp"
                             android:gravity="center">
                             <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:src="@android:drawable/ic_menu_agenda"
                                 app:tint="@color/primaryColor"
                                 android:contentDescription="Attendance"/>
@@ -244,252 +260,270 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Attendance"
-                                android:textStyle="bold"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="13sp"
+                                android:layout_marginTop="12dp"
                                 android:textColor="@color/textColorPrimary"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
+                    <!-- Grid Item 2: Schedule -->
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/timetableCard"
                         style="@style/CardStyle"
-                        android:layout_columnWeight="1">
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/pastelPurple">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="16dp"
+                            android:padding="24dp"
                             android:gravity="center">
                             <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:src="@android:drawable/ic_menu_today"
-                                app:tint="@color/accentMuted"
+                                app:tint="@color/primaryDarkColor"
                                 android:contentDescription="Schedule"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Schedule"
-                                android:textStyle="bold"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
+                                android:text="Timetable"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="13sp"
+                                android:layout_marginTop="12dp"
                                 android:textColor="@color/textColorPrimary"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/resultsCard"
-                        style="@style/CardStyle"
-                        android:layout_columnWeight="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp"
-                            android:gravity="center">
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@android:drawable/btn_star_big_on"
-                                app:tint="@color/accentColor"
-                                android:contentDescription="Results"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Results"
-                                android:textStyle="bold"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/textColorPrimary"/>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/notifyCard"
-                        style="@style/CardStyle"
-                        android:layout_columnWeight="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp"
-                            android:gravity="center">
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@android:drawable/ic_popup_reminder"
-                                app:tint="@color/primaryLightColor"
-                                android:contentDescription="Notices"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Notices"
-                                android:textStyle="bold"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/textColorPrimary"/>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
+                    <!-- Grid Item 3: Assignments -->
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/assignmentsCard"
                         style="@style/CardStyle"
-                        android:layout_columnWeight="1">
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/lightTeal">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="16dp"
+                            android:padding="24dp"
                             android:gravity="center">
                             <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:src="@android:drawable/ic_menu_edit"
-                                app:tint="@color/accentColor"
+                                app:tint="@color/vibrantTeal"
                                 android:contentDescription="Assignments"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Assignments"
-                                android:textStyle="bold"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="13sp"
+                                android:layout_marginTop="12dp"
                                 android:textColor="@color/textColorPrimary"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
+                    <!-- Grid Item 4: Notices -->
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/chatCard"
+                        android:id="@+id/notifyCard"
                         style="@style/CardStyle"
-                        android:layout_columnWeight="1">
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/peachCream">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="16dp"
+                            android:padding="24dp"
                             android:gravity="center">
                             <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@android:drawable/ic_popup_reminder"
+                                app:tint="@color/sunsetOrange"
+                                android:contentDescription="Notices"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Notices"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="13sp"
+                                android:layout_marginTop="12dp"
+                                android:textColor="@color/textColorPrimary"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Grid Item 5: Messages -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/chatCard"
+                        style="@style/CardStyle"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/pastelPurple">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="24dp"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:src="@android:drawable/stat_notify_chat"
-                                app:tint="@color/success"
+                                app:tint="@color/mintGreen"
                                 android:contentDescription="Messages"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Messages"
-                                android:textStyle="bold"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="13sp"
+                                android:layout_marginTop="12dp"
                                 android:textColor="@color/textColorPrimary"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/libraryCard"
-                        style="@style/CardStyle"
-                        android:layout_columnWeight="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp"
-                            android:gravity="center">
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@android:drawable/ic_menu_agenda"
-                                app:tint="@color/primaryColor"
-                                android:contentDescription="Library"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Library"
-                                android:textStyle="bold"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/textColorPrimary"/>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/feesCard"
-                        style="@style/CardStyle"
-                        android:layout_columnWeight="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp"
-                            android:gravity="center">
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@android:drawable/ic_menu_send"
-                                app:tint="@color/warning"
-                                android:contentDescription="Fees"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Fees"
-                                android:textStyle="bold"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/textColorPrimary"/>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/eventsCard"
-                        style="@style/CardStyle"
-                        android:layout_columnWeight="1">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp"
-                            android:gravity="center">
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@android:drawable/ic_menu_my_calendar"
-                                app:tint="@color/error"
-                                android:contentDescription="Events"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Events"
-                                android:textStyle="bold"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/textColorPrimary"/>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
+                    <!-- Grid Item 6: Syllabus -->
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/studentSyllabusCard"
                         style="@style/CardStyle"
-                        android:layout_columnWeight="1">
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/lightTeal">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="16dp"
+                            android:padding="24dp"
                             android:gravity="center">
                             <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:src="@android:drawable/ic_menu_save"
-                                app:tint="@color/accentMuted"
+                                app:tint="@color/royalPurple"
                                 android:contentDescription="Syllabus"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Syllabus"
-                                android:textStyle="bold"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="13sp"
+                                android:layout_marginTop="12dp"
+                                android:textColor="@color/textColorPrimary"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Grid Item 7: Results -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/resultsCard"
+                        style="@style/CardStyle"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/softBlue">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="24dp"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@android:drawable/ic_menu_search"
+                                app:tint="@color/primaryColor"
+                                android:contentDescription="Results"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Results"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="13sp"
+                                android:layout_marginTop="12dp"
+                                android:textColor="@color/textColorPrimary"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Grid Item 8: Library -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/libraryCard"
+                        style="@style/CardStyle"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/pastelPurple">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="24dp"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@android:drawable/ic_menu_sort_by_size"
+                                app:tint="@color/limePop"
+                                android:contentDescription="Library"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Library"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="13sp"
+                                android:layout_marginTop="12dp"
+                                android:textColor="@color/textColorPrimary"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Grid Item 9: Fees -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/feesCard"
+                        style="@style/CardStyle"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/lightTeal">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="24dp"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@android:drawable/ic_menu_send"
+                                app:tint="@color/goldenYellow"
+                                android:contentDescription="Fees"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Fees"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="13sp"
+                                android:layout_marginTop="12dp"
+                                android:textColor="@color/textColorPrimary"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Grid Item 10: Events -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/eventsCard"
+                        style="@style/CardStyle"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/softBlue">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="24dp"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@android:drawable/ic_menu_gallery"
+                                app:tint="@color/secondaryColor"
+                                android:contentDescription="Events"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Events"
+                                android:fontFamily="sans-serif-medium"
+                                android:textSize="13sp"
+                                android:layout_marginTop="12dp"
                                 android:textColor="@color/textColorPrimary"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>

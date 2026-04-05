@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgColor"
@@ -12,90 +13,104 @@
         android:gravity="center_horizontal"
         android:paddingStart="32dp"
         android:paddingEnd="32dp"
-        android:paddingTop="40dp"
+        android:paddingTop="60dp"
         android:paddingBottom="40dp">
 
-        <!-- Logo -->
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_campus_logo"
-            android:layout_marginBottom="24dp"
-            android:contentDescription="Campus Logo"/>
-
-        <!-- Title -->
-
-        <!-- Subtitle -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:text="Join Campus Companion"
-            android:textColor="@color/primaryDarkColor"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/pastelPurple"
+            android:layout_marginBottom="24dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_campus_logo"
+                android:padding="16dp"
+                android:contentDescription="Campus Logo"/>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter your details to register"
-            android:textSize="14sp"
+            android:text="Join the Campus"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/primaryColor"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your details to get started"
+            android:textSize="15sp"
             android:textColor="@color/textColorSecondary"
-            android:gravity="center"
-            android:layout_marginBottom="32dp"/>
+            android:layout_marginBottom="40dp"/>
 
-        <!-- Full Name -->
-        <EditText
-            android:id="@+id/nameEditText"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/InputStyle"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:hint="Full Name"
-            android:drawableStart="@android:drawable/ic_menu_myplaces"
-            android:drawablePadding="12dp"
-            style="@style/InputStyle"
-            android:layout_marginBottom="16dp"/>
+            app:startIconDrawable="@android:drawable/ic_menu_myplaces"
+            app:boxStrokeColor="@color/primaryColor"
+            app:hintTextColor="@color/primaryColor">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- User ID -->
-        <EditText
-            android:id="@+id/userIdEditText"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/InputStyle"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:hint="Enrollment No / User ID"
-            android:inputType="text"
-            android:drawableStart="@android:drawable/ic_dialog_email"
-            android:drawablePadding="12dp"
-            style="@style/InputStyle"
-            android:layout_marginBottom="16dp"/>
+            app:startIconDrawable="@android:drawable/ic_dialog_email"
+            app:boxStrokeColor="@color/primaryColor"
+            app:hintTextColor="@color/primaryColor">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userIdEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Password -->
-        <EditText
-            android:id="@+id/passwordEditText"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/InputStyle"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:drawableStart="@android:drawable/ic_lock_idle_lock"
-            android:drawablePadding="12dp"
-            style="@style/InputStyle"
-            android:layout_marginBottom="20dp"/>
+            app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
+            app:passwordToggleEnabled="true"
+            app:boxStrokeColor="@color/primaryColor"
+            app:hintTextColor="@color/primaryColor">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Register Button -->
         <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="60dp"
             android:text="Create Account"
-            style="@style/ButtonStyle"/>
+            android:backgroundTint="@color/primaryColor"
+            style="@style/ButtonStyle"
+            android:layout_marginTop="16dp"/>
 
-        <!-- Login Redirect -->
         <TextView
             android:id="@+id/loginTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Already part of the campus? Login"
+            android:text="Already have an account? Login"
             android:textColor="@color/primaryColor"
             android:textStyle="bold"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:padding="8dp"/>
 
     </LinearLayout>

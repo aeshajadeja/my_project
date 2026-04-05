@@ -26,6 +26,7 @@ class MarkAttendanceActivity : AppCompatActivity() {
     private var studentList = mutableListOf<Student>()
     private val attendanceData = mutableMapOf<String, String>() // ID -> P/A
     private lateinit var subjectSpinner: Spinner
+    private var facultyAllocations = mutableListOf<Pair<String, String>>() // Subject to Semester
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,24 +46,34 @@ class MarkAttendanceActivity : AppCompatActivity() {
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         dateTv.text = "Date: ${sdf.format(Date())}"
 
-        loadStudents()
+        subjectSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (facultyAllocations.isNotEmpty()) {
+                    val selectedSem = facultyAllocations[position].second
+                    loadStudents(selectedSem)
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
         backBtn.setOnClickListener { finish() }
 
         saveBtn.setOnClickListener {
-            if (subjectSpinner.selectedItem == null) {
+            if (subjectSpinner.selectedItem == null || subjectSpinner.selectedItem.toString() == "No Subjects Allocated") {
                 Toast.makeText(this, "No subjects allocated to you", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            saveAttendance(subjectSpinner.selectedItem.toString())
+            val subject = facultyAllocations[subjectSpinner.selectedItemPosition].first
+            saveAttendance(subject)
         }
 
         downloadBtn.setOnClickListener {
-            if (subjectSpinner.selectedItem == null) {
+            if (subjectSpinner.selectedItem == null || subjectSpinner.selectedItem.toString() == "No Subjects Allocated") {
                 Toast.makeText(this, "No subjects allocated to you", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            exportToPublicDownloads(subjectSpinner.selectedItem.toString())
+            val subject = facultyAllocations[subjectSpinner.selectedItemPosition].first
+            exportToPublicDownloads(subject)
         }
     }
 
@@ -71,29 +82,43 @@ class MarkAttendanceActivity : AppCompatActivity() {
         val currentFacultyId = userPref.getString("current_userId", "") ?: ""
         
         val allocPref = getSharedPreferences("AllocationData", Context.MODE_PRIVATE)
-        val allocatedSubjects = allocPref.getStringSet("subjects_$currentFacultyId", setOf())?.toList() ?: listOf()
+        val allAllocIds = allocPref.getStringSet("allocation_ids", setOf()) ?: setOf()
+        
+        facultyAllocations.clear()
+        for (allocId in allAllocIds) {
+            val fId = allocPref.getString("fac_id_$allocId", "")
+            if (fId == currentFacultyId) {
+                val sub = allocPref.getString("subject_$allocId", "") ?: ""
+                val sem = allocPref.getString("semester_$allocId", "") ?: ""
+                facultyAllocations.add(sub to sem)
+            }
+        }
 
-        if (allocatedSubjects.isEmpty()) {
+        if (facultyAllocations.isEmpty()) {
             val emptyList = listOf("No Subjects Allocated")
             val subAdapter = ArrayAdapter(this, R.layout.spinner_item, emptyList)
             subAdapter.setDropDownViewResource(R.layout.spinner_item)
             subjectSpinner.adapter = subAdapter
             subjectSpinner.isEnabled = false
         } else {
-            val subAdapter = ArrayAdapter(this, R.layout.spinner_item, allocatedSubjects)
+            val displayList = facultyAllocations.map { "${it.first} (${it.second})" }
+            val subAdapter = ArrayAdapter(this, R.layout.spinner_item, displayList)
             subAdapter.setDropDownViewResource(R.layout.spinner_item)
             subjectSpinner.adapter = subAdapter
         }
     }
 
-    private fun loadStudents() {
+    private fun loadStudents(targetSem: String) {
         val sharedPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
         val allIds = sharedPref.getStringSet("all_user_ids", setOf()) ?: setOf()
         
         studentList.clear()
+        attendanceData.clear()
         for (id in allIds) {
             val role = sharedPref.getString("role_$id", "")
-            if (role == "Student") {
+            val studentSem = sharedPref.getString("current_sem_$id", "All")
+            
+            if (role == "Student" && (targetSem == "All" || studentSem == targetSem)) {
                 val name = sharedPref.getString("name_$id", "Student")!!
                 studentList.add(Student(id, name))
             }
@@ -103,11 +128,13 @@ class MarkAttendanceActivity : AppCompatActivity() {
             attendanceData[id] = status
         }
         recyclerView.adapter = adapter
+        
+        if (studentList.isEmpty()) {
+            Toast.makeText(this, "No students found for $targetSem", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun saveAttendance(subject: String) {
-        if (subject == "No Subjects Allocated") return
-
         if (attendanceData.size < studentList.size) {
             Toast.makeText(this, "Please mark attendance for all students", Toast.LENGTH_SHORT).show()
             return
@@ -127,8 +154,6 @@ class MarkAttendanceActivity : AppCompatActivity() {
     }
 
     private fun exportToPublicDownloads(subject: String) {
-        if (subject == "No Subjects Allocated") return
-
         if (attendanceData.isEmpty()) {
             Toast.makeText(this, "No data to export", Toast.LENGTH_SHORT).show()
             return

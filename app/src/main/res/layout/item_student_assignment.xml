@@ -3,42 +3,86 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
-    android:layout_margin="8dp">
+    app:cardCornerRadius="24dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/white"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="24dp">
 
-        <TextView
-            android:id="@+id/studentAssignTitleTv"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Assignment Title"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@color/primaryColor"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/lightTeal">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@android:drawable/ic_menu_edit"
+                    app:tint="@color/accentColor"
+                    android:padding="12dp"/>
+            </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/studentAssignDeadlineTv"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:id="@+id/studentAssignTitleTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Assignment Title"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="18sp"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:id="@+id/studentAssignDeadlineTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Due on Oct 20, 2024"
+                    android:textSize="13sp"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/textColorSecondary"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Deadline: 20th Oct 2024"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/textColorSecondary"/>
+            android:layout_height="1dp"
+            android:background="@color/dividerColor"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/submitAssignBtn"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_gravity="end"
-            android:text="Submit Now"
-            android:textSize="12sp"/>
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="Select File &amp; Submit"
+            app:cornerRadius="16dp"
+            android:fontFamily="sans-serif-medium"
+            android:textAllCaps="false"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:backgroundTint="@color/softBlue"
+            android:textColor="@color/primaryColor"
+            app:icon="@android:drawable/ic_menu_upload"
+            app:iconTint="@color/primaryColor"
+            app:iconGravity="textStart"/>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

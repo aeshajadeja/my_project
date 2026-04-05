@@ -1,122 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bgColor">
 
-    <!-- Admin Header -->
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:background="@color/primaryColor">
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="40dp"
+            android:paddingBottom="16dp"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Admin Control Center"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"/>
-            <TextView
-                android:id="@+id/adminWelcomeTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Welcome, Administrator"
-                android:textColor="#CCFFFFFF"
-                android:textSize="14sp"/>
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Admin Center"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="26sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/adminWelcomeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome, Administrator"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/logoutBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_lock_power_off"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/error"
+                android:padding="12dp"
+                android:contentDescription="Logout"
+                android:layout_marginEnd="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/adminProfileCard"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/pastelPurple"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/adminProfileIconView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@android:drawable/ic_menu_myplaces"
+                    android:scaleType="centerCrop"
+                    app:tint="@color/primaryColor"
+                    android:padding="12dp"
+                    android:contentDescription="Profile"/>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/adminProfileCard"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            app:cardCornerRadius="22.5dp"
-            app:cardElevation="2dp"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:id="@+id/adminProfileIconView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@android:drawable/ic_menu_myplaces"
-                android:scaleType="centerCrop"
-                app:tint="@color/primaryColor"
-                android:padding="8dp"/>
-        </com.google.android.material.card.MaterialCardView>
-
-        <ImageButton
-            android:id="@+id/logoutBtn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_lock_power_off"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/white"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp"
+            android:paddingBottom="40dp">
 
-            <!-- Stats Analytics -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Real-time Analytics"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp"
-                android:textColor="@color/textColorPrimary"/>
-
+            <!-- Stats analytics hero -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@color/lightBlue"
-                android:layout_marginBottom="24dp">
+                app:cardCornerRadius="28dp"
+                app:cardBackgroundColor="@color/primaryColor"
+                android:layout_marginBottom="28dp"
+                app:cardElevation="8dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="28dp"
                     android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:divider="?android:attr/dividerHorizontal"
+                    android:gravity="center_vertical"
+                    android:divider="@android:color/transparent"
                     android:showDividers="middle">
                     
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                        <TextView android:id="@+id/statTotalStudents" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="24sp" android:textStyle="bold" android:textColor="@color/primaryColor"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Students" android:textColor="@color/textColorPrimary" android:textSize="14sp"/>
+                    <LinearLayout 
+                        android:layout_width="0dp" 
+                        android:layout_height="wrap_content" 
+                        android:layout_weight="1" 
+                        android:orientation="vertical" 
+                        android:gravity="center">
+                        <TextView 
+                            android:id="@+id/statTotalStudents" 
+                            android:layout_width="wrap_content" 
+                            android:layout_height="wrap_content" 
+                            android:text="0" 
+                            android:textSize="32sp" 
+                            android:fontFamily="sans-serif-black" 
+                            android:textColor="@color/white"/>
+                        <TextView 
+                            android:layout_width="wrap_content" 
+                            android:layout_height="wrap_content" 
+                            android:text="Students" 
+                            android:textColor="#CCFFFFFF" 
+                            android:textSize="14sp"/>
                     </LinearLayout>
 
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
-                        <TextView android:id="@+id/statTotalFaculty" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="24sp" android:textStyle="bold" android:textColor="@color/success"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Faculty" android:textColor="@color/textColorPrimary" android:textSize="14sp"/>
+                    <View 
+                        android:layout_width="1dp" 
+                        android:layout_height="40dp" 
+                        android:background="#40FFFFFF"/>
+
+                    <LinearLayout 
+                        android:layout_width="0dp" 
+                        android:layout_height="wrap_content" 
+                        android:layout_weight="1" 
+                        android:orientation="vertical" 
+                        android:gravity="center">
+                        <TextView 
+                            android:id="@+id/statTotalFaculty" 
+                            android:layout_width="wrap_content" 
+                            android:layout_height="wrap_content" 
+                            android:text="0" 
+                            android:textSize="32sp" 
+                            android:fontFamily="sans-serif-black" 
+                            android:textColor="@color/accentColor"/>
+                        <TextView 
+                            android:layout_width="wrap_content" 
+                            android:layout_height="wrap_content" 
+                            android:text="Faculty" 
+                            android:textColor="#CCFFFFFF" 
+                            android:textSize="14sp"/>
                     </LinearLayout>
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Management Modules"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp"
-                android:textColor="@color/textColorPrimary"/>
+                android:text="Campus Modules"
+                android:fontFamily="sans-serif-black"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="20sp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="4dp"/>
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -125,49 +179,58 @@
                 android:alignmentMode="alignMargins"
                 android:columnOrderPreserved="false">
 
+                <!-- Manage Faculty -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyManagementCard"
-                    style="@style/CardStyle">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp" android:gravity="center">
+                    style="@style/CardStyle"
+                    app:cardBackgroundColor="@color/softBlue">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp" android:gravity="center">
                         <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_myplaces" app:tint="@color/primaryColor"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Manage Faculty" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Faculty" android:fontFamily="sans-serif-medium" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Manage Students -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/studentManagementCard"
-                    style="@style/CardStyle">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp" android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_agenda" app:tint="@color/accentColor"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Manage Students" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    style="@style/CardStyle"
+                    app:cardBackgroundColor="@color/pastelPurple">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp" android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_agenda" app:tint="@color/primaryDarkColor"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Students" android:fontFamily="sans-serif-medium" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Announcements -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/noticeManagementCard"
-                    style="@style/CardStyle">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp" android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_dialog_info" app:tint="@color/primaryLightColor"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Announcements" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    style="@style/CardStyle"
+                    app:cardBackgroundColor="@color/lightTeal">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp" android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_dialog_info" app:tint="@color/accentColor"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Notices" android:fontFamily="sans-serif-medium" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Course Details -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/courseManagementCard"
-                    style="@style/CardStyle">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp" android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_save" app:tint="@color/success"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Course Details" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    style="@style/CardStyle"
+                    app:cardBackgroundColor="@color/softBlue">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp" android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_save" app:tint="@color/primaryColor"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Courses" android:fontFamily="sans-serif-medium" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Subject Allocation Module -->
+                <!-- Allocation -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/allocationCard"
-                    style="@style/CardStyle">
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp" android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/accentColor"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Allocate Subjects" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                    style="@style/CardStyle"
+                    app:cardBackgroundColor="@color/pastelPurple">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="24dp" android:gravity="center">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/primaryDarkColor"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Allocation" android:fontFamily="sans-serif-medium" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -175,4 +238,5 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

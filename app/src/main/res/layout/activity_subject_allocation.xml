@@ -1,120 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bgColor">
 
-    <!-- Header -->
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:background="@color/primaryColor">
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_revert"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/white"
-            android:contentDescription="Back" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Subject Allocation"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="12dp">
 
-    <ScrollView
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/textColorPrimary"
+                android:padding="12dp"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Allocations"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <com.google.android.material.card.MaterialCardView
                 style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp">
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginBottom="28dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="24dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bulk Allocation (Max 3)"
-                        android:textStyle="bold"
+                        android:text="New Subject Mapping"
+                        android:fontFamily="sans-serif-black"
                         android:textColor="@color/primaryColor"
                         android:textSize="18sp"
+                        android:layout_marginBottom="24dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Faculty Member"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="8dp"/>
+                    <Spinner
+                        android:id="@+id/facultySpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:background="@drawable/spinner_bg"
                         android:layout_marginBottom="20dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select Faculty"
-                        android:textSize="14sp"
+                        android:text="Choose Subjects"
+                        android:fontFamily="sans-serif-medium"
                         android:textColor="@color/textColorSecondary"
-                        android:layout_marginBottom="4dp"/>
-                    <Spinner
-                        android:id="@+id/facultySpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/spinner_bg"
-                        android:layout_marginBottom="16dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Assigned Subjects"
-                        android:textSize="14sp"
-                        android:textColor="@color/textColorSecondary"
-                        android:layout_marginBottom="4dp"/>
+                        android:textSize="13sp"
+                        android:layout_marginBottom="8dp"/>
                     
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/selectSubjectsBtn"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Pick Subjects (0 selected)"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_marginBottom="16dp"
-                        app:icon="@android:drawable/ic_menu_add"/>
+                        android:layout_height="52dp"
+                        android:text="Select (0 selected)"
+                        app:cornerRadius="16dp"
+                        android:textColor="@color/primaryColor"
+                        android:backgroundTint="@color/softBlue"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textAllCaps="false"
+                        app:icon="@android:drawable/ic_input_add"
+                        app:iconTint="@color/primaryColor"
+                        app:iconGravity="textStart"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Common Semester"
-                        android:textSize="14sp"
+                        android:text="Target Semester"
+                        android:fontFamily="sans-serif-medium"
                         android:textColor="@color/textColorSecondary"
-                        android:layout_marginBottom="4dp"/>
+                        android:textSize="13sp"
+                        android:layout_marginBottom="8dp"/>
                     <Spinner
                         android:id="@+id/semesterSpinner"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="52dp"
                         android:background="@drawable/spinner_bg"
-                        android:layout_marginBottom="24dp"/>
+                        android:layout_marginBottom="32dp"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/allocateBtn"
                         android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:text="Allocate All Selected"
+                        android:layout_height="60dp"
+                        android:text="Confirm Allocation"
                         style="@style/ButtonStyle"/>
 
                 </LinearLayout>
@@ -123,17 +144,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Current Allocations"
-                android:textStyle="bold"
+                android:text="Mapping Records"
+                android:fontFamily="sans-serif-black"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="18sp"
-                android:layout_marginBottom="12dp"/>
+                android:textSize="20sp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="4dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/allocationRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:paddingBottom="24dp"/>
 
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

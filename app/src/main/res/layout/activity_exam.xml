@@ -1,74 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bgColor">
 
-    <!-- Header -->
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp">
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_revert"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/primaryDarkColor"
-            android:contentDescription="Back" />
-        <TextView
-            android:layout_width="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Exam Schedule"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/textColorPrimary"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="12dp">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/textColorPrimary"
+                android:padding="12dp"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Exams"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
             
             <com.google.android.material.card.MaterialCardView
-                style="@style/CampusCardStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/softBlue"
+                android:layout_marginBottom="28dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="28dp">
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Final Semester Examination" 
-                        android:textStyle="bold" 
-                        android:textSize="18sp" 
+                        android:text="Semester Finals" 
+                        android:fontFamily="sans-serif-black" 
+                        android:textSize="20sp" 
                         android:textColor="@color/primaryColor"/>
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date: March 15 - March 30, 2026" 
+                        android:text="March 15 - March 30, 2026" 
                         android:textColor="@color/textColorSecondary"
-                        android:layout_marginTop="4dp"/>
-                    <TextView 
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp"/>
+                    
+                    <com.google.android.material.chip.Chip
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Status: Hall Ticket Released" 
-                        android:textColor="@color/success" 
-                        android:layout_marginTop="4dp" 
-                        android:textStyle="bold"/>
+                        android:text="Hall Ticket Released"
+                        app:chipBackgroundColor="@color/white"
+                        android:textColor="@color/success"
+                        app:chipStrokeWidth="0dp"
+                        android:fontFamily="sans-serif-bold"
+                        android:layout_marginTop="16dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -76,32 +97,58 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Upcoming Papers" 
-                android:textStyle="bold" 
-                android:textSize="18sp" 
+                android:fontFamily="sans-serif-black" 
                 android:textColor="@color/textColorPrimary"
-                android:layout_marginTop="16dp" 
-                android:layout_marginBottom="8dp"/>
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp" 
+                android:layout_marginStart="4dp"/>
             
-            <TextView 
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="15 March: Java Programming" 
-                style="@style/TimetableItem"/>
-            <TextView 
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginBottom="12dp">
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="15 March: Java Programming" 
+                    android:padding="20dp"
+                    android:textColor="@color/textColorPrimary"
+                    android:fontFamily="sans-serif-medium"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="18 March: Python for DS" 
-                style="@style/TimetableItem"/>
-            <TextView 
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginBottom="12dp">
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="18 March: Python for DS" 
+                    android:padding="20dp"
+                    android:textColor="@color/textColorPrimary"
+                    android:fontFamily="sans-serif-medium"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="21 March: DBMS" 
-                style="@style/TimetableItem"/>
-            <TextView 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="24 March: Mathematics" 
-                style="@style/TimetableItem"/>
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginBottom="12dp">
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="21 March: Database Management" 
+                    android:padding="20dp"
+                    android:textColor="@color/textColorPrimary"
+                    android:fontFamily="sans-serif-medium"/>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

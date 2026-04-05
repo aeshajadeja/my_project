@@ -3,31 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
-    android:layout_margin="8dp">
+    app:cardCornerRadius="24dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/white"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:padding="20dp"
         android:gravity="center_vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/lightTeal">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@android:drawable/ic_menu_edit"
+                android:padding="16dp"
+                app:tint="@color/accentColor"/>
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginStart="16dp">
 
             <TextView
                 android:id="@+id/allocTitleTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Subject Name"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@color/primaryColor"/>
+                android:fontFamily="sans-serif-black"
+                android:textSize="17sp"
+                android:textColor="@color/textColorPrimary"/>
 
             <TextView
                 android:id="@+id/allocDetailTv"
@@ -35,17 +52,20 @@
                 android:layout_height="wrap_content"
                 android:text="Faculty Details"
                 android:textColor="@color/textColorSecondary"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp"/>
+                android:fontFamily="sans-serif-medium"
+                android:textSize="13sp"
+                android:layout_marginTop="2dp"/>
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/deleteAllocBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:src="@android:drawable/ic_menu_delete"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/error"/>
+            app:tint="@color/error"
+            android:padding="10dp"
+            android:contentDescription="Delete" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

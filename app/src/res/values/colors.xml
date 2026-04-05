@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Modern Redesign Palette -->
+    <color name="primaryColor">#6C63FF</color> <!-- Modern Indigo -->
+    <color name="primaryDarkColor">#4A47A3</color>
+    <color name="primaryLightColor">#8F89FF</color>
+
+    <color name="softBlue">#E1F5FE</color> <!-- Soft Blue -->
+    <color name="pastelPurple">#F3E5F5</color> <!-- Pastel Purple -->
+    <color name="lightTeal">#E0F2F1</color> <!-- Light Teal -->
+    
+    <color name="accentColor">#00BFA5</color> <!-- Teal Accent -->
+    <color name="secondaryColor">#FF80AB</color> <!-- Pink Accent -->
+
+    <!-- Backgrounds -->
+    <color name="bgColor">#F8F9FA</color> <!-- Very Light Grey/White -->
+    <color name="cardColor">#FFFFFF</color>
+    <color name="surfaceColor">#FFFFFF</color>
+
+    <!-- Typography -->
+    <color name="textColorPrimary">#2D3436</color> <!-- Dark Slate -->
+    <color name="textColorSecondary">#636E72</color> <!-- Muted Slate -->
+    <color name="textMuted">#B2BEC3</color>
+
+    <!-- Standard Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="dividerColor">#F1F2F6</color>
+
+    <!-- Semantic Colors -->
+    <color name="success">#00B894</color>
+    <color name="warning">#FDCB6E</color>
+    <color name="error">#D63031</color>
+
+    <!-- Compatibility Aliases -->
+    <color name="primary">#6C63FF</color>
+    <color name="primaryDark">#4A47A3</color>
+    <color name="accent">#00BFA5</color>
+    <color name="background">#F8F9FA</color>
+</resources>

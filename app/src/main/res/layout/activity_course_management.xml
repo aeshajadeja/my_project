@@ -1,180 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bgColor">
 
-    <!-- Header -->
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:background="@color/primaryColor">
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_revert"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/white"
-            android:contentDescription="Back" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Course Details"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="12dp">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/textColorPrimary"
+                android:padding="12dp"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Courses"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
-            <!-- Course Info Cards -->
+            <!-- Java -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
                 android:layout_marginBottom="16dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="24dp">
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Java Programming" 
-                        android:textStyle="bold" 
+                        android:fontFamily="sans-serif-black" 
                         android:textSize="18sp" 
                         android:textColor="@color/primaryColor"/>
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Programming language for building secure and robust enterprise applications." 
+                        android:text="Industry-standard language for building enterprise applications and Android apps." 
                         android:textColor="@color/textColorSecondary" 
-                        android:layout_marginTop="4dp"/>
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="2dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Python -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
                 android:layout_marginBottom="16dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="24dp">
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Python Development" 
-                        android:textStyle="bold" 
-                        android:textSize="18sp" 
-                        android:textColor="@color/accentMuted"/>
-                    <TextView 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Versatile language used for AI, Data Science, and rapid web development." 
-                        android:textColor="@color/textColorSecondary" 
-                        android:layout_marginTop="4dp"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                style="@style/CardStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-                    <TextView 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="C++ Data Structures" 
-                        android:textStyle="bold" 
-                        android:textSize="18sp" 
-                        android:textColor="@color/warning"/>
-                    <TextView 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Focuses on low-level system programming and efficient data organization." 
-                        android:textColor="@color/textColorSecondary" 
-                        android:layout_marginTop="4dp"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                style="@style/CardStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-                    <TextView 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mathematics" 
-                        android:textStyle="bold" 
+                        android:fontFamily="sans-serif-black" 
                         android:textSize="18sp" 
                         android:textColor="@color/accentColor"/>
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Foundation for logic, discrete structures, and algorithmic complexity." 
+                        android:text="Focus on Data Science, Machine Learning, and rapid backend web development." 
                         android:textColor="@color/textColorSecondary" 
-                        android:layout_marginTop="4dp"/>
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="2dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- C++ -->
             <com.google.android.material.card.MaterialCardView
                 style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
                 android:layout_marginBottom="16dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="24dp">
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Database Management" 
-                        android:textStyle="bold" 
+                        android:text="C++ Data Structures" 
+                        android:fontFamily="sans-serif-black" 
                         android:textSize="18sp" 
-                        android:textColor="@color/success"/>
+                        android:textColor="@color/primaryDarkColor"/>
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Systems for managing structured data using SQL and normalization rules." 
+                        android:text="Low-level memory management and efficient algorithm design for performance." 
                         android:textColor="@color/textColorSecondary" 
-                        android:layout_marginTop="4dp"/>
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="2dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Maths -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+                    <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mathematics" 
+                        android:fontFamily="sans-serif-black" 
+                        android:textSize="18sp" 
+                        android:textColor="@color/primaryColor"/>
+                    <TextView 
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mathematical foundations for computing including discrete structures and logic." 
+                        android:textColor="@color/textColorSecondary" 
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="2dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

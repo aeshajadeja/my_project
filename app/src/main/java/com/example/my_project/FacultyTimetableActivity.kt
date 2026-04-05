@@ -28,7 +28,6 @@ class FacultyTimetableActivity : AppCompatActivity() {
     private var selectedImageUri: Uri? = null
     private var imageStatusTv: TextView? = null
 
-    // Launcher for selecting Schedule Image
     private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK && result.data != null) {
             selectedImageUri = result.data?.data
@@ -73,7 +72,8 @@ class FacultyTimetableActivity : AppCompatActivity() {
                     val time = sharedPref.getString("lec_time_$id", "") ?: ""
                     val details = sharedPref.getString("lec_det_$id", "") ?: ""
                     val img = sharedPref.getString("lec_img_$id", null)
-                    lectureList.add(Lecture(id, subject, time, details, dateStr, img))
+                    val sem = sharedPref.getString("lec_sem_$id", "All") ?: "All"
+                    lectureList.add(Lecture(id, subject, time, details, dateStr, img, sem))
                 }
             }
         }
@@ -92,12 +92,24 @@ class FacultyTimetableActivity : AppCompatActivity() {
         val currentId = userPref.getString("current_userId", "") ?: ""
         
         val allocPref = getSharedPreferences("AllocationData", Context.MODE_PRIVATE)
-        val allocatedSubjects = allocPref.getStringSet("subjects_$currentId", setOf())?.toList() ?: listOf()
+        val allAllocIds = allocPref.getStringSet("allocation_ids", setOf()) ?: setOf()
+        
+        val facultyAllocations = mutableListOf<Pair<String, String>>() // Subject to Semester
+        for (allocId in allAllocIds) {
+            val fId = allocPref.getString("fac_id_$allocId", "")
+            if (fId == currentId) {
+                val sub = allocPref.getString("subject_$allocId", "") ?: ""
+                val sem = allocPref.getString("semester_$allocId", "") ?: ""
+                facultyAllocations.add(sub to sem)
+            }
+        }
 
-        if (allocatedSubjects.isEmpty()) {
+        if (facultyAllocations.isEmpty()) {
             Toast.makeText(this, "No subjects allocated to you", Toast.LENGTH_SHORT).show()
             return
         }
+
+        val displayList = facultyAllocations.map { "${it.first} (${it.second})" }
 
         selectedImageUri = null
         val builder = AlertDialog.Builder(this)
@@ -109,7 +121,7 @@ class FacultyTimetableActivity : AppCompatActivity() {
         }
 
         val subSpinner = Spinner(this).apply {
-            val subAdapter = ArrayAdapter(context, R.layout.spinner_item, allocatedSubjects)
+            val subAdapter = ArrayAdapter(context, R.layout.spinner_item, displayList)
             subAdapter.setDropDownViewResource(R.layout.spinner_item)
             adapter = subAdapter
         }
@@ -140,7 +152,7 @@ class FacultyTimetableActivity : AppCompatActivity() {
             imagePickerLauncher.launch(intent)
         }
 
-        layout.addView(TextView(this).apply { text = "Subject:" })
+        layout.addView(TextView(this).apply { text = "Subject & Semester:" })
         layout.addView(subSpinner)
         layout.addView(dateBtn)
         layout.addView(timeEt)
@@ -150,11 +162,13 @@ class FacultyTimetableActivity : AppCompatActivity() {
 
         builder.setView(layout)
         builder.setPositiveButton("Add") { _, _ ->
-            val s = subSpinner.selectedItem.toString()
+            val selectedAlloc = facultyAllocations[subSpinner.selectedItemPosition]
+            val s = selectedAlloc.first
+            val sem = selectedAlloc.second
             val t = timeEt.text.toString()
             val d = detailEt.text.toString()
             if (s.isNotEmpty() && t.isNotEmpty()) {
-                saveLecture(s, t, d, currentId, selectedDate, selectedImageUri?.toString())
+                saveLecture(s, t, d, currentId, selectedDate, selectedImageUri?.toString(), sem)
                 loadSchedule()
             }
         }
@@ -175,7 +189,7 @@ class FacultyTimetableActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun saveLecture(sub: String, time: String, det: String, facultyId: String, date: String, imgUri: String?) {
+    private fun saveLecture(sub: String, time: String, det: String, facultyId: String, date: String, imgUri: String?, sem: String) {
         val sharedPref = getSharedPreferences("FacultySchedule", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         val id = UUID.randomUUID().toString()
@@ -185,6 +199,7 @@ class FacultyTimetableActivity : AppCompatActivity() {
         editor.putString("lec_det_$id", det)
         editor.putString("lec_fac_$id", facultyId)
         editor.putString("lec_date_$id", date)
+        editor.putString("lec_sem_$id", sem)
         if (imgUri != null) {
             editor.putString("lec_img_$id", imgUri)
             try { contentResolver.takePersistableUriPermission(Uri.parse(imgUri), Intent.FLAG_GRANT_READ_URI_PERMISSION) } catch (e: Exception) {}
@@ -209,6 +224,7 @@ class FacultyTimetableActivity : AppCompatActivity() {
                 loadSchedule()
             }
         }
+        builder.setNegativeButton("Cancel", null)
         builder.show()
     }
 
@@ -222,10 +238,12 @@ class FacultyTimetableActivity : AppCompatActivity() {
                 editor.putStringSet("lecture_ids", ids)
                 editor.apply()
                 loadSchedule()
-            }.show()
+            }
+            .setNegativeButton("Back", null)
+            .show()
     }
 
-    data class Lecture(val id: String, val subject: String, var time: String, val details: String, val date: String, val imageUri: String?)
+    data class Lecture(val id: String, val subject: String, var time: String, val details: String, val date: String, val imageUri: String?, val semester: String)
 
     class TimetableAdapter(
         private val list: List<Lecture>, 
@@ -239,20 +257,15 @@ class FacultyTimetableActivity : AppCompatActivity() {
             val detTv: TextView = v.findViewById(R.id.detailsTv)
             val reschedBtn: Button = v.findViewById(R.id.rescheduleBtn)
             val cancelBtn: Button = v.findViewById(R.id.cancelBtn)
-            val viewBtn: Button = Button(v.context).apply { 
-                text = "View Image"
-                visibility = View.GONE
-            }
+            val viewBtn: Button = v.findViewById(R.id.viewImgBtn)
         }
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val v = LayoutInflater.from(parent.context).inflate(R.layout.item_faculty_timetable, parent, false)
-            val vh = ViewHolder(v)
-            (v as ViewGroup).addView(vh.viewBtn) // Temporary dynamic add
-            return vh
+            return ViewHolder(v)
         }
         override fun onBindViewHolder(h: ViewHolder, position: Int) {
             val l = list[position]
-            h.subTv.text = "${l.subject} (${l.date})"
+            h.subTv.text = "${l.subject} (${l.date}) - ${l.semester}"
             h.timeTv.text = l.time
             h.detTv.text = l.details
             

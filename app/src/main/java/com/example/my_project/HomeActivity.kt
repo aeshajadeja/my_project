@@ -59,12 +59,26 @@ class HomeActivity : AppCompatActivity() {
         // Initial Semester Spinner (Empty/Disabled)
         updateSemesterSpinner(emptyList())
 
-        // Load saved selection
+        // Load saved selection or Auto-detect Batch from Enrollment No.
         val sharedPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
         val currentId = sharedPref.getString("current_userId", "") ?: ""
-        val savedYearPos = sharedPref.getInt("batch_pos_$currentId", 0)
         
-        yearSpinner.setSelection(savedYearPos)
+        // Logic: Auto-detect batch based on first two digits of Enrollment ID
+        val autoDetectedBatchPos = when {
+            currentId.startsWith("22") -> 1 // 2022-2025
+            currentId.startsWith("23") -> 2 // 2023-2026
+            currentId.startsWith("24") -> 3 // 2024-2027
+            currentId.startsWith("25") -> 4 // 2025-2028
+            else -> 0
+        }
+
+        if (autoDetectedBatchPos > 0) {
+            yearSpinner.setSelection(autoDetectedBatchPos)
+            yearSpinner.isEnabled = false // Lock batch selection for students
+        } else {
+            val savedYearPos = sharedPref.getInt("batch_pos_$currentId", 0)
+            yearSpinner.setSelection(savedYearPos)
+        }
 
         // 3. Selection Logic (Gatekeeping)
         val checkSelection = {

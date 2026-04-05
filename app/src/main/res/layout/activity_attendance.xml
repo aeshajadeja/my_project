@@ -1,206 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bgColor">
 
-    <!-- Header with Back Button -->
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp">
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_revert"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/primaryDarkColor"
-            android:contentDescription="Back" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Subject Attendance"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/textColorPrimary"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="12dp">
 
-    <ScrollView
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/textColorPrimary"
+                android:padding="12dp"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Attendance"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
-            <!-- Cards with Light Tint backgrounds for visibility -->
-            
+            <!-- Summary Hero -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="#E3F2FD"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/primaryColor"
+                android:layout_marginBottom="24dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="28dp"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Average Attendance"
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="84%"
+                        android:textColor="@color/white"
+                        android:textSize="48sp"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject-wise Breakdown"
+                android:fontFamily="sans-serif-black"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="4dp"/>
+
+            <!-- Java -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/softBlue"
                 android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Java Programming"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Java Programming"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Core Concepts"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/javaAttendanceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0%"
                         android:textColor="@color/primaryColor"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textSize="20sp"
+                        android:fontFamily="sans-serif-black"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Python -->
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="#E8F5E9"
+                app:cardBackgroundColor="@color/lightTeal"
                 android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Python Development"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Python Development"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Web &amp; Data"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/pythonAttendanceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0%"
-                        android:textColor="@color/success"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textColor="@color/accentColor"
+                        android:textSize="20sp"
+                        android:fontFamily="sans-serif-black"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- C++ -->
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="#FFF3E0"
+                app:cardBackgroundColor="@color/pastelPurple"
                 android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="C++ Data Structures"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C++ Data Structures"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Algorithms"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/cppAttendanceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0%"
-                        android:textColor="@color/warning"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textColor="@color/primaryDarkColor"
+                        android:textSize="20sp"
+                        android:fontFamily="sans-serif-black"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Maths -->
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="#F3E5F5"
+                app:cardBackgroundColor="@color/softBlue"
                 android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Mathematics"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Applied Mathematics"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Calculus &amp; Stats"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/mathsAttendanceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0%"
-                        android:textColor="#7B1FA2"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textColor="@color/primaryColor"
+                        android:textSize="20sp"
+                        android:fontFamily="sans-serif-black"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- DBMS -->
             <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardBackgroundColor="#E0F2F1"
+                app:cardBackgroundColor="@color/lightTeal"
                 android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="20dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
-                    <TextView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Database Management"
-                        android:textColor="@color/textColorPrimary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Database Systems"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SQL &amp; NoSQL"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="12sp"/>
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/dbmsAttendanceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0%"
-                        android:textColor="#00796B"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textColor="@color/accentColor"
+                        android:textSize="20sp"
+                        android:fontFamily="sans-serif-black"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

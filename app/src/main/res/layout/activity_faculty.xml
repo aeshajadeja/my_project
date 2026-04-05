@@ -1,80 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bgColor">
 
-    <!-- Header -->
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp"
-        android:background="@color/primaryColor">
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="40dp"
+            android:paddingBottom="16dp"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Faculty Dashboard"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"/>
-            <TextView
-                android:id="@+id/facultyWelcomeTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Welcome, Professor"
-                android:textColor="#CCFFFFFF"
-                android:textSize="14sp"/>
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Faculty Desk"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="26sp"
+                    android:fontFamily="sans-serif-medium" />
+
+                <TextView
+                    android:id="@+id/facultyWelcomeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome, Professor"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/logoutBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_lock_power_off"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/error"
+                android:padding="12dp"
+                android:contentDescription="Logout"
+                android:layout_marginEnd="8dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/facultyProfileCard"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/softBlue"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/facultyProfileIconView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@android:drawable/ic_menu_myplaces"
+                    android:scaleType="centerCrop"
+                    app:tint="@color/primaryColor"
+                    android:padding="12dp"
+                    android:contentDescription="Profile"/>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/facultyProfileCard"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            app:cardCornerRadius="22.5dp"
-            app:cardElevation="2dp"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:id="@+id/facultyProfileIconView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@android:drawable/ic_menu_myplaces"
-                android:scaleType="centerCrop"
-                app:tint="@color/primaryColor"
-                android:padding="8dp"
-                android:contentDescription="Profile"/>
-        </com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <ImageButton
-            android:id="@+id/logoutBtn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_lock_power_off"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/white"
-            android:contentDescription="Logout"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
-
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp"
+            android:paddingBottom="40dp">
+
+            <!-- Hero Stats Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="28dp"
+                app:cardBackgroundColor="@color/primaryColor"
+                android:layout_marginBottom="28dp"
+                app:cardElevation="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="28dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Today's Overview"
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 Classes Pending"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:fontFamily="sans-serif-black"
+                        android:layout_marginTop="4dp"/>
+                    
+                    <View 
+                        android:layout_width="40dp"
+                        android:layout_height="4dp"
+                        android:background="@color/accentColor"
+                        android:layout_marginTop="12dp"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Management Tools"
+                android:fontFamily="sans-serif-black"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="20sp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="4dp"/>
 
             <GridLayout
                 android:layout_width="match_parent"
@@ -87,19 +155,16 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyAttendanceCard"
                     style="@style/CardStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:cardBackgroundColor="@color/softBlue">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="20dp"
+                        android:padding="24dp"
                         android:gravity="center">
                         <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_agenda" app:tint="@color/primaryColor" android:contentDescription="Attendance"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Attendance" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Attendance" android:fontFamily="sans-serif-medium" android:textSize="13sp" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -107,37 +172,33 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyAssignmentsCard"
                     style="@style/CardStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1">
+                    android:layout_columnWeight="1"
+                    app:cardBackgroundColor="@color/pastelPurple">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="20dp"
+                        android:padding="24dp"
                         android:gravity="center">
                         <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/primaryDarkColor" android:contentDescription="Assignments"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Assignments" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Assignments" android:fontFamily="sans-serif-medium" android:textSize="13sp" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Results & Exams -->
+                <!-- Exams & Results -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyExamResultCard"
                     style="@style/CardStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:cardBackgroundColor="@color/lightTeal">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="20dp"
+                        android:padding="24dp"
                         android:gravity="center">
                         <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/btn_star_big_on" app:tint="@color/accentColor" android:contentDescription="Results"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Exams &amp; Results" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Exam Results" android:fontFamily="sans-serif-medium" android:textSize="13sp" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -145,19 +206,16 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyScheduleCard"
                     style="@style/CardStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:cardBackgroundColor="@color/softBlue">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="20dp"
+                        android:padding="24dp"
                         android:gravity="center">
                         <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_today" app:tint="@color/primaryLightColor" android:contentDescription="Schedule"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="My Schedule" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Timetable" android:fontFamily="sans-serif-medium" android:textSize="13sp" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -165,17 +223,16 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultySyllabusCard"
                     style="@style/CardStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1">
+                    android:layout_columnWeight="1"
+                    app:cardBackgroundColor="@color/pastelPurple">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="20dp"
+                        android:padding="24dp"
                         android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_save" app:tint="@color/accentMuted" android:contentDescription="Syllabus"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Syllabus" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_menu_save" app:tint="@color/primaryDarkColor" android:contentDescription="Syllabus"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Syllabus" android:fontFamily="sans-serif-medium" android:textSize="13sp" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -183,17 +240,16 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyNoticeCard"
                     style="@style/CardStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1">
+                    android:layout_columnWeight="1"
+                    app:cardBackgroundColor="@color/lightTeal">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="20dp"
+                        android:padding="24dp"
                         android:gravity="center">
-                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_dialog_info" app:tint="@color/primaryLightColor" android:contentDescription="Announcements"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Announcements" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/ic_dialog_info" app:tint="@color/accentColor" android:contentDescription="Notices"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Notices" android:fontFamily="sans-serif-medium" android:textSize="13sp" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -201,24 +257,22 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/facultyChatCard"
                     style="@style/CardStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:clickable="true"
-                    android:focusable="true">
+                    app:cardBackgroundColor="@color/softBlue">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="20dp"
+                        android:padding="24dp"
                         android:gravity="center">
                         <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@android:drawable/stat_notify_chat" app:tint="@color/success" android:contentDescription="Messages"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Messages" android:layout_marginTop="8dp" android:textStyle="bold" android:textColor="@color/textColorPrimary" android:gravity="center"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Messages" android:fontFamily="sans-serif-medium" android:textSize="13sp" android:layout_marginTop="12dp" android:textColor="@color/textColorPrimary"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
             </GridLayout>
 
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,65 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bgColor">
 
-    <!-- Header -->
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="12dp">
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:src="@android:drawable/ic_menu_revert"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/primaryDarkColor"
-            android:contentDescription="Back" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Profile"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/textColorPrimary"
-            android:layout_marginStart="10dp"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="12dp">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/textColorPrimary"
+                android:padding="12dp"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:paddingBottom="32dp">
+            android:padding="24dp">
 
-            <!-- Profile Image -->
+            <!-- Profile Image Section -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/changeProfilePicCard"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="12dp"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="45dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/softBlue"
                 android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="60dp"
-                app:cardElevation="6dp">
+                android:focusable="true">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -71,23 +78,22 @@
                         android:layout_height="match_parent"
                         android:src="@android:drawable/ic_menu_myplaces"
                         android:scaleType="centerCrop"
-                        android:padding="18dp"/>
+                        app:tint="@color/primaryColor"
+                        android:padding="28dp"/>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="bottom"
-                        android:background="#80000000"/>
+                        android:background="#1A000000"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="EDIT"
-                        android:textColor="@color/white"
-                        android:textSize="10sp"
-                        android:textStyle="bold"
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@android:drawable/ic_menu_camera"
+                        app:tint="@color/primaryColor"
                         android:layout_gravity="bottom|center_horizontal"
-                        android:layout_marginBottom="4dp"/>
+                        android:layout_marginBottom="8dp"/>
 
                 </FrameLayout>
 
@@ -96,49 +102,64 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tap to change profile picture"
+                android:text="Tap to update your photo"
                 android:textColor="@color/textColorSecondary"
-                android:textSize="12sp"
-                android:layout_marginBottom="24dp"/>
+                android:textSize="14sp"
+                android:layout_marginBottom="40dp"/>
 
-            <!-- Name -->
+            <!-- Form Fields -->
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/InputStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Full Name"
-                android:layout_marginBottom="16dp">
-
+                app:startIconDrawable="@android:drawable/ic_menu_myplaces">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editProfileName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:textColor="@color/textColorPrimary"/>
-
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- User ID -->
-            <TextView
-                android:id="@+id/profileIdTv"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="User ID: ..."
-                android:textColor="@color/textColorSecondary"
-                android:background="@drawable/edit_text_rounded"
-                android:padding="16dp"
-                android:layout_marginBottom="24dp"/>
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/bgColor"
+                android:layout_marginBottom="32dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+                    <ImageView 
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@android:drawable/ic_dialog_info"
+                        app:tint="@color/textColorSecondary"
+                        android:layout_marginEnd="12dp"/>
+                    <TextView
+                        android:id="@+id/profileIdTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User ID: ..."
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <!-- Save Button -->
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/saveProfileBtn"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="Save Changes"
-                android:layout_marginBottom="32dp"
-                style="@style/ButtonStyle"/>
+                android:layout_height="60dp"
+                android:text="Update Profile"
+                style="@style/ButtonStyle"
+                android:layout_marginBottom="40dp"/>
 
-            <!-- Student Actions -->
+            <!-- Additional Links -->
             <LinearLayout
                 android:id="@+id/studentActionsLayout"
                 android:layout_width="match_parent"
@@ -149,83 +170,71 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Academic Quick Links"
-                    android:textStyle="bold"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="12dp"/>
+                    android:text="Quick Shortcuts"
+                    android:fontFamily="sans-serif-black"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="16dp"/>
 
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:columnCount="2"
                     android:alignmentMode="alignMargins"
-                    android:useDefaultMargins="true">
+                    android:useDefaultMargins="false">
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/profileAttendanceCard"
-                        style="@style/CampusCardStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1">
-
+                        style="@style/CardStyle"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/softBlue">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="18dp"
+                            android:padding="20dp"
                             android:gravity="center">
-
                             <ImageView
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:src="@android:drawable/ic_menu_agenda"
                                 app:tint="@color/primaryColor"/>
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Attendance"
-                                android:layout_marginTop="6dp"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
+                                android:fontFamily="sans-serif-medium"
+                                android:layout_marginTop="8dp"
+                                android:textSize="12sp"
                                 android:textColor="@color/textColorPrimary"/>
-
                         </LinearLayout>
-
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/profileTimetableCard"
-                        style="@style/CampusCardStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_columnWeight="1">
-
+                        style="@style/CardStyle"
+                        android:layout_columnWeight="1"
+                        app:cardBackgroundColor="@color/pastelPurple">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:padding="18dp"
+                            android:padding="20dp"
                             android:gravity="center">
-
                             <ImageView
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
                                 android:src="@android:drawable/ic_menu_today"
-                                app:tint="@color/secondaryColor"/>
-
+                                app:tint="@color/primaryDarkColor"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Timetable"
-                                android:layout_marginTop="6dp"
-                                android:textSize="13sp"
-                                android:textStyle="bold"
+                                android:fontFamily="sans-serif-medium"
+                                android:layout_marginTop="8dp"
+                                android:textSize="12sp"
                                 android:textColor="@color/textColorPrimary"/>
-
                         </LinearLayout>
-
                     </com.google.android.material.card.MaterialCardView>
 
                 </GridLayout>
@@ -236,4 +245,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

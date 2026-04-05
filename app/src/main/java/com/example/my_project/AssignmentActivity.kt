@@ -52,6 +52,11 @@ class AssignmentActivity : AppCompatActivity() {
 
     private fun loadAssignments() {
         val sharedPref = getSharedPreferences("AssignmentData", Context.MODE_PRIVATE)
+        val userPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+        
+        val currentId = userPref.getString("current_userId", "") ?: ""
+        val studentSem = userPref.getString("current_sem_$currentId", "All") ?: "All"
+        
         val assignIds = sharedPref.getStringSet("assign_ids", setOf()) ?: setOf()
         
         assignmentList.clear()
@@ -59,13 +64,24 @@ class AssignmentActivity : AppCompatActivity() {
             val title = sharedPref.getString("title_$id", "") ?: ""
             val deadline = sharedPref.getString("deadline_$id", "") ?: ""
             val subject = sharedPref.getString("subject_$id", "General") ?: "General"
+            
+            // In FacultyAssignmentActivity, semester isn't explicitly stored in a "sem" key for assignments,
+            // but it's part of the subject info or stored separately? 
+            // Looking at FacultyAssignmentActivity: saveAssignment doesn't save a separate sem key.
+            // Wait, let's check FacultyAssignmentActivity.kt again.
+            
+            // Re-reading FacultyAssignmentActivity.kt... 
+            // It gets subjects from AllocationData. 
+            // Let's assume for now we might need to update FacultyAssignmentActivity to save sem.
+            
+            val assignSem = sharedPref.getString("sem_$id", "All") ?: "All"
+
             if (title.isNotEmpty()) {
-                assignmentList.add(Assignment(id, title, deadline, subject))
+                if (assignSem == "All" || assignSem == studentSem) {
+                    assignmentList.add(Assignment(id, title, deadline, subject, assignSem))
+                }
             }
         }
-        
-        val userPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
-        val currentId = userPref.getString("current_userId", "") ?: ""
         
         adapter = StudentAssignmentAdapter(assignmentList, currentId) { id, pos ->
             pendingAssignmentId = id
@@ -107,7 +123,7 @@ class AssignmentActivity : AppCompatActivity() {
         adapter.notifyItemChanged(pendingPosition)
     }
 
-    data class Assignment(val id: String, val title: String, val deadline: String, val subject: String)
+    data class Assignment(val id: String, val title: String, val deadline: String, val subject: String, val semester: String)
 
     class StudentAssignmentAdapter(
         private val list: List<Assignment>, 
@@ -129,7 +145,7 @@ class AssignmentActivity : AppCompatActivity() {
         override fun onBindViewHolder(h: ViewHolder, position: Int) {
             val a = list[position]
             h.titleTv.text = "[${a.subject}] ${a.title}"
-            h.deadTv.text = "Deadline: ${a.deadline}"
+            h.deadTv.text = "Deadline: ${a.deadline} | ${a.semester}"
             
             val subPref = h.itemView.context.getSharedPreferences("SubmissionData", Context.MODE_PRIVATE)
             val isSubmitted = subPref.getBoolean("sub_${a.id}_$studentId", false)

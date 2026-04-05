@@ -1,75 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bgColor">
 
-    <!-- Header -->
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="16dp">
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_revert"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="@color/primaryDarkColor"
-            android:contentDescription="Back" />
-        <TextView
-            android:layout_width="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Results"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/textColorPrimary"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="32dp"
+            android:paddingBottom="12dp">
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="@color/textColorPrimary"
+                android:padding="12dp"
+                android:contentDescription="Back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Results"
+                android:textSize="24sp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/textColorPrimary"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
-            
+            android:padding="20dp">
+
             <!-- Result Summary Card -->
             <com.google.android.material.card.MaterialCardView
-                style="@style/CampusCardStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/primaryColor"
+                android:layout_marginBottom="28dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp"
+                    android:padding="28dp"
                     android:gravity="center">
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Current CGPA" 
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="16sp"/>
+                        android:text="Cumulative GPA" 
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"/>
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="3.85" 
                         android:textSize="48sp" 
-                        android:textStyle="bold" 
-                        android:textColor="@color/primaryColor"/>
+                        android:fontFamily="sans-serif-black" 
+                        android:textColor="@color/white"
+                        android:layout_marginTop="4dp"/>
                     <TextView 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Academic Standing: Excellent" 
-                        android:textColor="@color/success" 
-                        android:textStyle="bold"/>
+                        android:text="Excellent Standing" 
+                        android:textColor="@color/accentColor" 
+                        android:fontFamily="sans-serif-bold"
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -77,32 +98,58 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Semester History" 
-                android:textStyle="bold" 
-                android:textSize="18sp" 
+                android:fontFamily="sans-serif-black" 
                 android:textColor="@color/textColorPrimary"
-                android:layout_marginTop="24dp" 
-                android:layout_marginBottom="12dp"/>
+                android:textSize="18sp"
+                android:layout_marginBottom="16dp" 
+                android:layout_marginStart="4dp"/>
             
-            <TextView 
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Semester 1: 3.8 GPA" 
-                style="@style/TimetableItem"/>
-            <TextView 
+                app:cardBackgroundColor="@color/softBlue"
+                android:layout_marginBottom="12dp">
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Semester 1: 3.8 GPA" 
+                    android:padding="20dp"
+                    android:textColor="@color/textColorPrimary"
+                    android:fontFamily="sans-serif-medium"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Semester 2: 3.9 GPA" 
-                style="@style/TimetableItem"/>
-            <TextView 
+                app:cardBackgroundColor="@color/lightTeal"
+                android:layout_marginBottom="12dp">
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Semester 2: 3.9 GPA" 
+                    android:padding="20dp"
+                    android:textColor="@color/textColorPrimary"
+                    android:fontFamily="sans-serif-medium"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Semester 3: 3.7 GPA" 
-                style="@style/TimetableItem"/>
-            <TextView 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Semester 4: 4.0 GPA" 
-                style="@style/TimetableItem"/>
+                app:cardBackgroundColor="@color/pastelPurple"
+                android:layout_marginBottom="12dp">
+                <TextView 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Semester 3: 3.7 GPA" 
+                    android:padding="20dp"
+                    android:textColor="@color/textColorPrimary"
+                    android:fontFamily="sans-serif-medium"/>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

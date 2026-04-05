@@ -31,16 +31,26 @@ class NotificationsActivity : AppCompatActivity() {
     }
 
     private fun loadNotices() {
-        val sharedPref = getSharedPreferences("CampusData", Context.MODE_PRIVATE)
-        val noticeIds = sharedPref.getStringSet("notice_ids", setOf()) ?: setOf()
+        val campusPref = getSharedPreferences("CampusData", Context.MODE_PRIVATE)
+        val userPref = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+        
+        val currentId = userPref.getString("current_userId", "") ?: ""
+        val studentSem = userPref.getString("current_sem_$currentId", "All") ?: "All"
+        
+        val noticeIds = campusPref.getStringSet("notice_ids", setOf()) ?: setOf()
         
         noticeList.clear()
         for (id in noticeIds) {
-            val title = sharedPref.getString("notice_title_$id", "") ?: ""
-            val content = sharedPref.getString("notice_content_$id", "") ?: ""
-            val date = sharedPref.getString("notice_date_$id", "") ?: ""
+            val title = campusPref.getString("notice_title_$id", "") ?: ""
+            val content = campusPref.getString("notice_content_$id", "") ?: ""
+            val date = campusPref.getString("notice_date_$id", "") ?: ""
+            val targetSem = campusPref.getString("notice_sem_$id", "All") ?: "All"
+            
+            // Filter: Show if it's for everyone OR matches student's semester
             if (title.isNotEmpty() && content.isNotEmpty()) {
-                noticeList.add(Notice(id, title, content, date))
+                if (targetSem == "All" || targetSem == studentSem) {
+                    noticeList.add(Notice(id, title, content, date, targetSem))
+                }
             }
         }
         noticeList.sortByDescending { it.date }
@@ -49,7 +59,7 @@ class NotificationsActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
-    data class Notice(val id: String, val title: String, val content: String, val date: String)
+    data class Notice(val id: String, val title: String, val content: String, val date: String, val targetSem: String)
 
     class NoticeAdapter(private val list: List<Notice>) : RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -63,7 +73,7 @@ class NotificationsActivity : AppCompatActivity() {
         }
         override fun onBindViewHolder(h: ViewHolder, position: Int) {
             val item = list[position]
-            h.titleTv.text = item.title
+            h.titleTv.text = if (item.targetSem != "All") "[${item.targetSem}] ${item.title}" else item.title
             h.contentTv.text = item.content
             h.dateTv.text = item.date
         }
